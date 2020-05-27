@@ -3,8 +3,13 @@
   <div class="main">
     <div id="main-top">
       <img v-bind:src="logo" alt="无图像">
-      <div id="desc">
-        <p>{{cdList.dissname}}</p>
+      <div id="list-title">
+        <p id="title">{{cdList.dissname}}</p>
+        <span id="creator">
+          <img v-bind:src="cdList.headurl" alt="">
+          <p>{{cdList.nickname}}</p>
+        </span>
+        <p id="desc">{{cdList.desc}}</p>
       </div>
     </div>
     <ul>
@@ -82,16 +87,60 @@ export default {
 }
 #main-top {
   display: flex;
+  padding: 20px;
   width: 100%;
-  height: 100px;
+  box-sizing: border-box;
 }
 img {
   flex: 0;
+  margin: 0 20px 0 0;
+  border-radius: 15px;
   width: 100px;
   height: 100px;
 }
-#desc {
+#list-title {
   flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  #title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #creator {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    img {
+      display: inline-block;
+      margin: 0 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      vertical-align: middle;
+    }
+    p {
+      display: inline-block;
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 10px;
+    }
+  }
+  #desc {
+    /* display: inline-block; */
+    height: 30px;
+    font-size: 10px;
+    line-height: 15px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
 }
 li {
   display: flex;
