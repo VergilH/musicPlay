@@ -80,11 +80,14 @@ export default {
 }
 .main-inner {
   flex: 1;
+  background-color: #222;
+  color: #fff;
 }
 img {
   flex: 0;
   width: 100px;
   height: 100px;
+  border-radius: 10px 0 0 10px;
 }
 ul {
   margin: 0;
@@ -110,8 +113,9 @@ ul {
   flex: 1;
   padding: 10px 0 10px 15px;
   min-width: 0;
+  border-radius: 0 10px 10px 0;
   box-sizing: border-box;
-  background-color: #F5F5F5;
+  background-color: #888;
 }
 .list-detail {
     overflow: hidden;
