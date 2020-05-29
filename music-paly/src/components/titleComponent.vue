@@ -1,15 +1,15 @@
 <template>
-<div id="header">
+<div id="top">
   <span @click="goSongs()">推荐</span>
-  <span>歌手</span>
+  <span @click="goSinger()">歌手</span>
   <span @click="goRank()">排行</span>
-  <span>搜索</span>
+  <span @click="goSearch()">搜索</span>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'header',
+  name: 'topComponent',
   data () {
     return {
     }
@@ -24,13 +24,23 @@ export default {
       this.$router.push({
         path: '/'
       })
+    },
+    goSinger () {
+      this.$router.push({
+        path: '/singer'
+      })
+    },
+    goSearch () {
+      this.$router.push({
+        path: '/search'
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#header {
+#top {
   width: 100%;
   padding: 20px 0;
   box-sizing: border-box;

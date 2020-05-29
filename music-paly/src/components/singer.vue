@@ -3,11 +3,25 @@
 </template>
 
 <script>
+import { getSinger } from '../apis/singer.js'
 export default {
   name: 'singer',
   data () {
-    let url = '/api/v8/fcg-bin/v8.fcg?channel=singer&page=list&key=all_all_all&pagesize=100&pagenum=1&g_tk=5381&jsonpCallback=callback&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0'
-    this.$axios.get(url).then((res) => {
+    let url = '/api/v8/fcg-bin/v8.fcg'
+    let data = {
+      channel: 'singer',
+      page: 'list',
+      key: 'all_all_all',
+      pagesize: 100,
+      pagenum: 1,
+      g_tk: 1576475597,
+      hostUin: 0,
+      platform: 'yqq',
+      needNewCode: 0
+    }
+    this.$axios.get(url, {
+      params: data
+    }).then((res) => {
       console.log(res)
       console.log(res.data)
       let num1 = res.data.indexOf('(') // 截取第一个（所在位置
@@ -19,7 +33,12 @@ export default {
     }
   },
   methods: {
-
+    _getSinger () {
+      getSinger()
+    }
+  },
+  created () {
+    this._getSinger()
   }
 }
 </script>

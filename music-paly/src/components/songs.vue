@@ -60,7 +60,7 @@ export default {
     goMusicPage (dissid) { // 路由传参到详情页
       // console.log(dissid)
       this.$router.push({
-        path: '/musicPlayList',
+        path: '/musicplaylist',
         query: {
           dissid: dissid
         }
@@ -82,6 +82,9 @@ export default {
   flex: 1;
   background-color: #222;
   color: #fff;
+}
+h4 {
+  margin: 0;
 }
 img {
   flex: 0;
