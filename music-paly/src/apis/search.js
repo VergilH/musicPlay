@@ -12,10 +12,10 @@ export function getHotKey () { // 热门搜索数据
     platform: 'h5',
     needNewCode: 1
   }
-  axios.get(url, {
+  return axios.get(url, {
     params: data
   }).then((res) => {
-    console.log(res)
+    return res
   })
 }
 
