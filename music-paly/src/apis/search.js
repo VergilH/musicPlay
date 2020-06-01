@@ -19,16 +19,17 @@ export function getHotKey () { // 热门搜索数据
   })
 }
 
-export function search () { // 检索关键词
+export function search (key) { // 检索关键词
   let url = 'api/soso/fcgi-bin/search_for_qq_cp'
   let data = {
-    w: '林俊杰', // 关键词
+    w: key, // 关键词
     p: 10, // 分页：默认10
     n: 10 // 请求数量：默认10
   }
-  axios.get(url, {
+  return axios.get(url, {
     params: data
   }).then((res) => {
     console.log(res)
+    return res
   })
 }
