@@ -22,6 +22,18 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/img': {
+        target: 'https://y.gtimg.cn/',
+        headers: {
+          referer: 'https://y.gtimg.cn/',
+          host: 'y.gtimg.cn',
+        },
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/img': ''
+        }
       }
     },
 

@@ -1,8 +1,9 @@
 <template>
 <div>
   <div class="main">
+    <span @click="$router.back(-1)">返回</span>
     <div id="main-top">
-      <img v-bind:src="logo" alt="无图像">
+      <img v-bind:src="logo">
       <div id="list-title">
         <p id="title">{{cdList.dissname}}</p>
         <span id="creator">
@@ -31,7 +32,7 @@
 export default {
   name: 'playMusicList',
   data () {
-    let id = this.$route.query.dissid // 接收路由参数
+    let id = this.$route.params.id // 接收路由参数
     this.disstid = id
     console.log(id)
     return {
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     getSongs: function () {
-      let id = this.$route.query.dissid
+      let id = this.$route.params.id
       let url = '/api/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg' // 推荐列表详细内容，后续页面使用
       let data = { // 参数
         disstid: id,
@@ -76,11 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  margin: 0;
-  padding: 0;
-  color: #fff;
-}
 .main {
   width: 100%;
   background-color: #222;
@@ -110,11 +106,12 @@ img {
   }
   #creator {
     display: inline-block;
+    margin: 5px 0;
     height: 40px;
     line-height: 40px;
     img {
       display: inline-block;
-      margin: 0 10px;
+      margin: 0 10px 0 2px;
       width: 20px;
       height: 20px;
       border-radius: 10px;

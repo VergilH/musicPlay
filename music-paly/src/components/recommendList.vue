@@ -1,0 +1,179 @@
+<template>
+<div>
+  <div class="main">
+    <span @click="$router.back(-1)">返回</span>
+    <div id="main-top">
+      <img v-bind:src="logo">
+      <div id="list-title">
+        <p id="title">{{cdList.dissname}}</p>
+        <span id="creator">
+          <img v-bind:src="cdList.headurl" alt="">
+          <p>{{cdList.nickname}}</p>
+        </span>
+        <p id="desc">{{cdList.desc}}</p>
+      </div>
+    </div>
+    <ul>
+      <li v-for="(song, index) in songList" :key="song.id">
+        <div class="index">{{index + 1}}</div>
+        <div class="song-detail">
+          <p id="song-name">{{song.songname}}</p>
+          <p v-for="singer in song.singer" :key="singer.name">/{{singer.name}}</p>
+          <p>- {{song.albumname}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+</template>
+
+<script>
+/* import { getSongList } from '@/apis/songs.js' */
+export default {
+  name: 'recommendList',
+  data () {
+    let id = this.$route.params.id // 接收路由参数
+    this.disstid = id
+    console.log(id)
+    return {
+      disstid: '1',
+      logo: '',
+      cdList: '',
+      songList: []
+    }
+  },
+  methods: {
+    getSongs: function () {
+      let id = this.$route.params.id
+      let url = '/api/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg' // 推荐列表详细内容，后续页面使用
+      let data = { // 参数
+        disstid: id,
+        type: 1,
+        json: 1,
+        utf8: 1,
+        onlysong: 0,
+        platform: 'yqq',
+        hostUin: 0,
+        needNewCode: 0
+      }
+      console.log(data)
+      this.$axios.get(url, {params: data}).then((res) => {
+        console.log(res)
+        let num1 = res.data.indexOf('(') // 截取第一个（所在位置
+        let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
+        let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
+        console.log(resultData)
+        this.logo = resultData.cdlist[0].logo
+        this.cdList = resultData.cdlist[0]
+        console.log(resultData.cdlist[0])
+        this.songList = resultData.cdlist[0].songlist
+      })
+    }
+  },
+  created () {
+    this.getSongs()
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.main {
+  width: 100%;
+  background-color: #222;
+}
+#main-top {
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+img {
+  flex: 0;
+  margin: 0 20px 0 0;
+  border-radius: 15px;
+  width: 100px;
+  height: 100px;
+}
+#list-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  #title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #creator {
+    display: inline-block;
+    margin: 5px 0;
+    height: 40px;
+    line-height: 40px;
+    img {
+      display: inline-block;
+      margin: 0 10px 0 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      vertical-align: middle;
+    }
+    p {
+      display: inline-block;
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 10px;
+    }
+  }
+  #desc {
+    /* display: inline-block; */
+    height: 30px;
+    font-size: 10px;
+    line-height: 15px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+}
+li {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  text-align: left;
+  list-style: none;
+  .index {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #33CC99;
+  }
+  .song-detail {
+    flex: 1;
+    width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  p {
+    position: relative;
+    left: -4px;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 30px;
+    color: #999;
+  }
+}
+#song-name {
+  position: relative;
+  left: 0;
+  display: block;
+  white-space: normal;
+  font-size: 14px;
+  color: #fff;
+}
+</style>

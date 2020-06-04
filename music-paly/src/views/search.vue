@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import titleComponent from './titleComponent.vue'
+import titleComponent from '../components/titleComponent.vue'
 import { getHotKey, search } from '../apis/search.js'
 export default {
   name: 'search',

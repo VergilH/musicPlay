@@ -5,13 +5,9 @@
 </template>
 
 <script>
-import ranking from './components/ranking.vue'
-import singer from './components/singer.vue'
 export default {
   name: 'App',
   components: {
-    ranking,
-    singer
   }
 }
 </script>
@@ -23,6 +19,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
 }
 body {
   margin: 0;

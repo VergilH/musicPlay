@@ -1,5 +1,5 @@
 <template>
-<div class="main">
+<div>
   <titleComponent></titleComponent>
   <div class="main-inner">
     <h4>热门歌单推荐</h4>
@@ -26,7 +26,8 @@ export default {
   },
   data () {
     return {
-      lists: []
+      lists: [],
+      isDisplay: true
     }
   },
   methods: {
@@ -57,13 +58,10 @@ export default {
         this.lists = res.data.list
       })
     },
-    goMusicPage (dissid) { // 路由传参到详情页
+    goMusicPage (id) { // 路由传参到详情页
       // console.log(dissid)
       this.$router.push({
-        path: '/musicplaylist',
-        query: {
-          dissid: dissid
-        }
+        path: `/songs/recommendlist/${id}`
       })
     }
   },

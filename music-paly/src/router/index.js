@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ranking from '@/components/ranking.vue'
-import singer from '../components/singer.vue'
-import songs from '../components/songs.vue'
-import search from '../components/search.vue'
-import musicPlayList from '../components/musicPlayList.vue'
+import rank from '../views/rank.vue'
+import singer from '../views/singer.vue'
+import songs from '../views/songs.vue'
+import search from '../views/search.vue'
+import musicPlayList from '../views/musicPlayList.vue'
+import recommend from '../components/recommend.vue'
+import recommendList from '../components/recommendList.vue'
+import rankList from '../components/rankList.vue'
+import rankListDetail from '../components/rankListDetail.vue'
 
 Vue.use(Router)
 
@@ -12,15 +16,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Ranking',
-      component: ranking
-      /* children: [
+      name: 'rank',
+      component: rank,
+      children: [
         {
-          path: '/rank',
-          name: 'rankDetail',
-          component: () => import('../components/rankDetail.vue')
+          path: '',
+          name: 'ranklist',
+          component: rankList
+        },
+        {
+          path: '/rank/rankdetail/:id',
+          name: 'ranklistdetail',
+          component: rankListDetail
         }
-      ] */
+      ]
     },
     {
       path: '/singer',
@@ -30,12 +39,19 @@ export default new Router({
     {
       path: '/songs',
       name: 'songs',
-      component: songs
-    },
-    {
-      path: '/musicplaylist',
-      name: 'musicPlayList',
-      component: musicPlayList
+      component: songs,
+      children: [
+        {
+          path: '',
+          name: 'recommend',
+          component: recommend
+        },
+        {
+          path: '/songs/recommendlist/:id',
+          name: 'recommendlist',
+          component: recommendList
+        }
+      ]
     },
     {
       path: '/search',
