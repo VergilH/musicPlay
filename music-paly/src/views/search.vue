@@ -2,7 +2,7 @@
 <div class="main">
   <titleComponent></titleComponent>
   <div id="search-btn">
-    <input type="text" placeholder="搜索" v-model="key" @click="getKey()">
+    <input type="text" placeholder="搜索" v-model="key" @click="getKey()" maxlength="20">
     <button @click="getSearch(key)">sousuo</button>
   </div>
   <div class="hot-key" >
@@ -30,6 +30,7 @@ export default {
     return {
       hotKey: [],
       key: '',
+      timeout: null,
       searchRes: []
     }
   },
@@ -55,7 +56,24 @@ export default {
       console.log(this.key)
     }
   },
+  watch: {
+    key (cur, old) { // 监听input触发请求
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        search(cur).then((res) => {
+          console.log(res.data)
+          let num1 = res.data.indexOf('(') // 截取第一个（所在位置
+          let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
+          let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
+          console.log(resultData.data.song.list)
+          this.searchRes = resultData.data.song.list
+        })
+      }, 800)
+    }
+  },
   created () {
+  },
+  mounted () {
     this.getSearchHotKey()
   }
 }
@@ -65,6 +83,15 @@ export default {
 .main {
   background-color: #222;
   color: #fff;
+}
+input{
+  outline-style: none;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 5px 10px;
+  width: 85%;
+  font-size: 24px;
+  color: #000;
 }
 #search-btn {
   margin: 20px auto;

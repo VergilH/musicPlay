@@ -1,5 +1,6 @@
 <template>
 <div>
+  <loading v-show="isLoading"></loading>
   <titleComponent></titleComponent>
   <div class="main-out">
     <div class="main-rank" v-for="(item) in list" :key="item.total" @click="getMusicListDetail(item.id)">
@@ -17,23 +18,28 @@
 
 <script>
 import titleComponent from './titleComponent.vue'
+import loading from './loading.vue'
 import { getMusicRank, getRankDetail } from '../apis/rank.js'
 export default {
   name: 'rankList',
   components: {
-    titleComponent
+    titleComponent,
+    loading
   },
   data () {
     return {
-      list: []
+      list: [],
+      isLoading: true
     }
   },
   methods: {
-    test () {
+    _getMusicRank () {
+      this.isLoading = true
       getMusicRank().then((res) => {
         console.log(res)
         this.list = res
       })
+      this.isLoading = false
     },
     getMusicListDetail: function (id) { // 点击先获取点击元素的排行榜id
       let topid = id // 榜单id
@@ -43,9 +49,9 @@ export default {
     }
   },
   created () {
+    this._getMusicRank()
   },
   mounted () {
-    this.test()
   }
 }
 </script>

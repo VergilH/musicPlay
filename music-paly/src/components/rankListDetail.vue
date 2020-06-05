@@ -1,17 +1,9 @@
 <template>
 <div>
   <div class="main">
-    <span @click="$router.back(-1)">返回</span>
-    <div id="main-top">
-      <img v-bind:src="topImgUrl">
-      <!-- <div id="list-title">
-        <p id="title">{{cdList.dissname}}</p>
-        <span id="creator">
-          <img v-bind:src="cdList.headurl" alt="">
-          <p>{{cdList.nickname}}</p>
-        </span>
-        <p id="desc">{{cdList.desc}}</p>
-      </div> -->
+    <div id="top-img" v-bind:style="{backgroundImage: 'url('+ topImgUrl +')'}">
+      <span id="back-btn" @click="$router.back(-1)">返回</span>
+      <p>{{title}}</p>
     </div>
     <ul>
       <li v-for="(song, index) in songList" :key="song.cur_count">
@@ -37,6 +29,7 @@ export default {
     return {
       disstid: '',
       songList: [],
+      title: '',
       topImgUrl: ''
     }
   },
@@ -46,7 +39,8 @@ export default {
       getRankDetail(topid).then((res) => { // 修改topid即可
         console.log(res)
         this.songList = res.data.songlist
-        this.topImgUrl = res.data.topinfo.pic
+        this.title = res.data.topinfo.ListName
+        this.topImgUrl = res.data.topinfo.pic_v12
       })
     }
   },
@@ -61,62 +55,21 @@ export default {
   width: 100%;
   background-color: #222;
 }
-#main-top {
-  display: flex;
-  padding: 20px;
+#top-img {
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-}
-img {
-  flex: 0;
-  margin: 0 20px 0 0;
-  border-radius: 15px;
-  width: 100px;
-  height: 100px;
-}
-#list-title {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-  #title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  height: 260px;
+  background: center no-repeat;
+  background-size: cover;
+  #back-btn {
+    position: absolute;
+    top: 5px;
+    left: 10px;
   }
-  #creator {
-    display: inline-block;
-    margin: 5px 0;
-    height: 40px;
+  p {
     line-height: 40px;
-    img {
-      display: inline-block;
-      margin: 0 10px 0 2px;
-      width: 20px;
-      height: 20px;
-      border-radius: 10px;
-      vertical-align: middle;
-    }
-    p {
-      display: inline-block;
-      vertical-align: middle;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 10px;
-    }
-  }
-  #desc {
-    /* display: inline-block; */
-    height: 30px;
-    font-size: 10px;
-    line-height: 15px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    font-size: 20px;
+    font-weight: 1000;
   }
 }
 li {

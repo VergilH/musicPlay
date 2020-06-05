@@ -18,6 +18,7 @@ export function getMusicRank () { // 获取排行榜单
   return axios.get(url, {
     params: data
   }).then((res) => { // QQapi
+    console.log(res)
     let num1 = res.data.indexOf('(') // 截取第一个（所在位置
     let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
     let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // 对jsonp字符串转化为json
