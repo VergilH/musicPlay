@@ -2,20 +2,20 @@
 <div>
   <div class="main">
     <span @click="$router.back(-1)">返回</span>
-   <!-- <div id="main-top">
-      <img v-bind:src="logo">
-      <div id="list-title">
+    <div id="main-top">
+      <img v-bind:src="topImgUrl">
+      <!-- <div id="list-title">
         <p id="title">{{cdList.dissname}}</p>
         <span id="creator">
           <img v-bind:src="cdList.headurl" alt="">
           <p>{{cdList.nickname}}</p>
         </span>
         <p id="desc">{{cdList.desc}}</p>
-      </div>
-    </div> -->
+      </div> -->
+    </div>
     <ul>
-      <li v-for="song in songList" :key="song.cur_count">
-        <div class="index">{{song.cur_count}}</div>
+      <li v-for="(song, index) in songList" :key="song.cur_count">
+        <div class="index">{{index + 1}}</div>
         <div class="song-detail">
           <p id="song-name">{{song.data.songname}}</p>
           <p v-for="singer in song.data.singer" :key="singer.name">/{{singer.name}}</p>
@@ -34,11 +34,10 @@ export default {
   data () {
     let id = this.$route.params.id // 接收路由参数
     this.disstid = id
-    console.log(id)
-    console.log(this.$route.params.imgUrl)
     return {
       disstid: '',
-      songList: []
+      songList: [],
+      topImgUrl: ''
     }
   },
   methods: {
@@ -47,6 +46,7 @@ export default {
       getRankDetail(topid).then((res) => { // 修改topid即可
         console.log(res)
         this.songList = res.data.songlist
+        this.topImgUrl = res.data.topinfo.pic
       })
     }
   },
