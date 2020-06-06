@@ -1,5 +1,6 @@
 <template>
 <div id="load">
+  <img src="../assets/loading.gif">
   <p>Loading...</p>
 </div>
 </template>

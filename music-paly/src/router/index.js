@@ -7,6 +7,8 @@ import search from '../views/search.vue'
 import musicPlayList from '../views/musicPlayList.vue'
 import recommend from '../components/recommend.vue'
 import recommendList from '../components/recommendList.vue'
+import singers from '../components/singers.vue'
+import singerDetail from '../components/singerDetail.vue'
 import rankList from '../components/rankList.vue'
 import rankListDetail from '../components/rankListDetail.vue'
 
@@ -34,7 +36,19 @@ export default new Router({
     {
       path: '/singer',
       name: 'singer',
-      component: singer
+      component: singer,
+      children: [
+        {
+          path: '',
+          name: 'singers',
+          component: singers
+        },
+        {
+          path: '/singer/singerdetail/:id',
+          name: 'singerdetail',
+          component: singerDetail
+        }
+      ]
     },
     {
       path: '/songs',

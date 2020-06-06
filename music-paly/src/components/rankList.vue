@@ -1,6 +1,6 @@
 <template>
 <div>
-  <loading v-show="isLoading"></loading>
+  <loading v-show="!list.length"></loading>
   <titleComponent></titleComponent>
   <div class="main-out">
     <div class="main-rank" v-for="(item) in list" :key="item.total" @click="getMusicListDetail(item.id)">
@@ -49,9 +49,9 @@ export default {
     }
   },
   created () {
-    this._getMusicRank()
   },
   mounted () {
+    this._getMusicRank()
   }
 }
 </script>

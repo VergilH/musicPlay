@@ -24,7 +24,6 @@ export function getSinger () { // 歌手列表
   return axios.get(url, {
     params: data
   }).then((res) => {
-    console.log(res)
     return res
   })
 }
@@ -40,12 +39,11 @@ export function getSingerDetail (singermid) { // 歌手详情列表
     begin: 0,
     num: 100,
     songstatus: 1,
-    singermid: '002J4UUk29y8BY'
+    singermid: singermid // 从事件获取
   }
   return axios.get(url, {
     params: data
   }).then((res) => {
-    console.log(res)
     return res
   })
 }
