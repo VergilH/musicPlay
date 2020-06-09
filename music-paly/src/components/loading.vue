@@ -1,7 +1,7 @@
 <template>
 <div id="load">
   <img src="../assets/loading.gif">
-  <p>Loading...</p>
+  <p>加载中...</p>
 </div>
 </template>
 
@@ -20,17 +20,23 @@ export default {
 <style lang="scss" scoped>
 #load {
   z-index: 9;
-  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100vh;
+  text-align: center;
   background-color: #222;
+  img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  }
   p {
     display: inline-block;
-    margin-top: 50px;
+    margin-top: 20px;
+    width: 100%;
   }
 }
 </style>

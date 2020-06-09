@@ -1,7 +1,7 @@
 <template>
 <div>
   <titleComponent></titleComponent>
-  <div v-for="letter in AZ" :key="letter.id">
+  <div v-for="letter in AZ" :key="letter.id" v-show="!!singer.length">
     <ul>
       <ul class="letter">{{letter}}</ul>
       <ul class="singers-list" v-for="name in singer" :key="name.Fsort" v-if="letter == name.Findex" @click="_getSingerDetail(name.Fsinger_mid)">
