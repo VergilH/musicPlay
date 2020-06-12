@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="main">
-    <span @click="$router.back(-1)">返回</span>
+    <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon icon="chevron-left" /></span>
     <div id="main-top">
       <img v-bind:src="logo">
       <div id="list-title">
@@ -80,6 +80,11 @@ export default {
 .main {
   width: 100%;
   background-color: #222;
+}
+#back-btn {
+  position: absolute;
+  top: 5px;
+  left: 10px;
 }
 #main-top {
   display: flex;

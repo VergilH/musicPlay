@@ -1,6 +1,7 @@
 <template>
 <div id="load">
   <img src="../assets/loading.gif">
+  <p><font-awesome-icon icon="redo" spin /></p>
   <p>加载中...</p>
 </div>
 </template>

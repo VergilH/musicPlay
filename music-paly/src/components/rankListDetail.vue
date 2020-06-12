@@ -2,7 +2,7 @@
 <div>
   <div class="main">
     <div id="top-img" v-bind:style="{backgroundImage: 'url('+ topImgUrl +')'}">
-      <span id="back-btn" @click="$router.back(-1)">返回</span>
+      <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon :icon="['fas', 'chevron-left']" /></span>
       <p>{{title}}</p>
     </div>
     <ul>
