@@ -2,7 +2,9 @@
 <div>
   <div class="main">
     <div id="top-img" v-bind:style="{backgroundImage: 'url('+ topImgUrl +')'}">
-      <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon :icon="['fas', 'chevron-left']" /></span>
+      <span id="back-btn" @click="$router.back(-1)">
+        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      </span>
       <p>{{title}}</p>
     </div>
     <ul>
@@ -58,19 +60,29 @@ export default {
 #top-img {
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 280px;
   background: center no-repeat;
   background-size: cover;
+  color: #fff;
   #back-btn {
     position: absolute;
     top: 5px;
     left: 10px;
+    color: #999;
   }
   p {
     line-height: 40px;
     font-size: 20px;
     font-weight: 1000;
   }
+}
+ul {
+  position: relative;
+  bottom: 20px;
+  padding-top: 10px;
+  border-radius: 20px 20px 0 0;
+  box-sizing: border-box;
+  background-color: #222;
 }
 li {
   display: flex;

@@ -5,7 +5,7 @@
     <ul>
       <ul class="letter">{{letter}}</ul>
       <ul class="singers-list" v-for="name in singer" :key="name.Fsort" v-if="letter == name.Findex" @click="_getSingerDetail(name.Fsinger_mid)">
-        <img v-bind:src='url+name.Fsinger_mid+url2'>
+        <img v-lazy='url+name.Fsinger_mid+url2'>
         <li>{{name.Fsinger_name}}</li>
       </ul>
     </ul>

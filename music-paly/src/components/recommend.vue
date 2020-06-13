@@ -5,7 +5,7 @@
     <h4>热门歌单推荐</h4>
     <ul>
       <li class="main-list" v-for="list in lists" :key="list.re" @click="goMusicPage(list.dissid)">
-        <img v-bind:src="list.imgurl" alt="">
+        <img v-lazy="list.imgurl">
         <div class="list-text">
           <span class="list-detail">{{list.dissname}}</span>
           <span class="list-detail">创建者:{{list.creator.name}}</span>

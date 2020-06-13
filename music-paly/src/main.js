@@ -10,6 +10,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
+import VueLazyload from 'vue-lazyload' // 图片懒加载
 
 library.add(fas, far, fab)
 
@@ -17,9 +18,17 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
 Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
+Vue.use(VueLazyload)
 Vue.use(VueJsonp)
 Vue.prototype.$axios = Axios
 Vue.config.productionTip = false
+
+/* Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'dist/error.png',
+  loading: 'dist/loading.gif',
+  attempt: 1
+}) */
 
 /* eslint-disable no-new */
 new Vue({

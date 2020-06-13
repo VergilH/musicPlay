@@ -4,7 +4,7 @@
   <titleComponent></titleComponent>
   <div class="main-out">
     <div class="main-rank" v-for="(item) in list" :key="item.total" @click="getMusicListDetail(item.id)">
-      <img v-bind:src="item.picUrl" alt="">
+      <img v-lazy="item.picUrl" alt="">
       <div class="main-rank-list">
         <ul v-for="(item, index) in item.songList" :key="item.name">
           <span>{{index + 1}}.{{item.songname}}</span>

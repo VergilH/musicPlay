@@ -80,6 +80,7 @@ export default {
 .main {
   width: 100%;
   background-color: #222;
+  color: #fff;
 }
 #back-btn {
   position: absolute;
@@ -88,9 +89,10 @@ export default {
 }
 #main-top {
   display: flex;
-  padding: 20px;
+  padding: 20px 20px 40px;
   width: 100%;
   box-sizing: border-box;
+  background-color: #999;
 }
 img {
   flex: 0;
@@ -143,6 +145,14 @@ img {
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
   }
+}
+ul {
+  position: relative;
+  bottom: 20px;
+  padding-top: 10px;
+  border-radius: 20px 20px 0 0;
+  box-sizing: border-box;
+  background-color: #222;
 }
 li {
   display: flex;
