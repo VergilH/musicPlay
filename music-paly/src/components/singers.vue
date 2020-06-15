@@ -1,7 +1,7 @@
 <template>
 <div>
   <titleComponent></titleComponent>
-  <div v-for="letter in AZ" :key="letter.id" v-show="!!singer.length">
+  <div v-for="letter in AZ" :key="letter.id" v-show="!!singer.length" :id="getId(letter)">
     <ul>
       <ul class="letter">{{letter}}</ul>
       <ul class="singers-list" v-for="name in singer" :key="name.Fsort" v-if="letter == name.Findex" @click="_getSingerDetail(name.Fsinger_mid)">
@@ -10,23 +10,26 @@
       </ul>
     </ul>
   </div>
+  <alphabet :msg="AZ"></alphabet>
 </div>
 </template>
 
 <script>
 import titleComponent from './titleComponent.vue'
+import alphabet from './alphabet.vue'
 import { getSinger, getSingerDetail } from '../apis/singer.js'
 export default {
   name: 'singers',
   components: {
-    titleComponent
+    titleComponent,
+    alphabet
   },
   data () {
     return {
       url: 'https://y.gtimg.cn/music/photo_new/T001R300x300M000',
       url2: '.jpg?max_age=2592000',
       singer: [],
-      AZ: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'U', 'V', 'W', 'X', 'Y', 'Z']
+      AZ: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     }
   },
   methods: {
@@ -55,6 +58,9 @@ export default {
       this.singer.sort((a, b) => {
         console.log(a['Findex'].localeCompare(b['Findex']))
       })
+    },
+    getId: function (id) {
+      return id
     }
   },
   created () {

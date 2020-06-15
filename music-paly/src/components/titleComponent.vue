@@ -1,9 +1,9 @@
 <template>
 <div id="top">
-  <span @click="goSongs()">推荐</span>
-  <span @click="goSinger()">歌手</span>
-  <span @click="goRank()">排行</span>
-  <span @click="goSearch()">搜索</span>
+  <span @click="goSongs()"><font-awesome-icon icon="thumbs-up" />推荐</span>
+  <span @click="goSinger()"><font-awesome-icon icon="microphone" />歌手</span>
+  <span @click="goRank()"><font-awesome-icon icon="list-alt" />排行</span>
+  <span @click="goSearch()"><font-awesome-icon icon="search" />搜索</span>
 </div>
 </template>
 

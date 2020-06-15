@@ -1,6 +1,9 @@
 <template>
 <div>
   <loading v-show="!list.length"></loading>
+  <div id="top-icon" >
+    <font-awesome-icon icon="pastafarianism" />
+  </div>
   <titleComponent></titleComponent>
   <div class="main-out">
     <div class="main-rank" v-for="(item) in list" :key="item.total" @click="getMusicListDetail(item.id)">
@@ -61,6 +64,13 @@ export default {
   width: 100%;
   background-color: #222;
   overflow: hidden;
+}
+#top-icon {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 24px;
+  color: #fff;
 }
 .main-inner {
   flex: 1;
