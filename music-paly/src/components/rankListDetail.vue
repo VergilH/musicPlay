@@ -5,7 +5,6 @@
       <span id="back-btn" @click="$router.back(-1)">
         <font-awesome-icon :icon="['fas', 'chevron-left']" />
       </span>
-      <p>{{title}}</p>
     </div>
     <ul>
       <li v-for="(song, index) in songList" :key="song.cur_count">
@@ -66,9 +65,10 @@ export default {
   color: #fff;
   #back-btn {
     position: absolute;
-    top: 5px;
     left: 10px;
-    color: #999;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
   }
   p {
     line-height: 40px;

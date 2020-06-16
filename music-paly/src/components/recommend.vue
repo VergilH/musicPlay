@@ -1,6 +1,7 @@
 <template>
 <div>
   <titleComponent></titleComponent>
+  <loading v-show="!lists.length"></loading>
   <div class="main-inner">
     <h4>热门歌单推荐</h4>
     <ul>
@@ -18,11 +19,13 @@
 
 <script>
 import titleComponent from './titleComponent.vue'
+import loading from './loading.vue'
 import { getList } from '@/apis/songs.js'
 export default {
   name: 'songs',
   components: {
-    titleComponent
+    titleComponent,
+    loading
   },
   data () {
     return {
@@ -31,27 +34,6 @@ export default {
     }
   },
   methods: {
-    getSongs: function () {
-      let params = { // eslint-disable-line no-unused-vars
-        g_tk: 1928093487,
-        disstid: 2054427046,
-        type: 1,
-        json: 1,
-        utf8: 1,
-        onlysong: 0,
-        platform: 'yqq',
-        hostUin: 0,
-        needNewCode: 0
-      }
-      let url = '/api/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg?g_tk=1928093487&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&disstid=2054427046&type=1&json=1&utf8=1&onlysong=0&platform=yqq&hostUin=0&needNewCode=0&jsonpCallback=playlistinfoCallback' // 推荐列表详细内容，后续页面使用
-      this.$axios.get(url).then((res) => {
-        console.log(res)
-        let num1 = res.data.indexOf('(') // 截取第一个（所在位置
-        let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
-        let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
-        console.log(resultData)
-      })
-    },
     _getList: function () { // 推荐列表数据
       getList().then((res) => {
         console.log(res)
@@ -66,6 +48,8 @@ export default {
     }
   },
   created () {
+  },
+  mounted () {
     this._getList()
   }
 }

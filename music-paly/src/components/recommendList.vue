@@ -28,7 +28,7 @@
 </template>
 
 <script>
-/* import { getSongList } from '@/apis/songs.js' */
+import { getSongs } from '@/apis/songs.js'
 export default {
   name: 'recommendList',
   data () {
@@ -43,35 +43,19 @@ export default {
     }
   },
   methods: {
-    getSongs: function () {
+    _getSongs () { // 歌单内容
       let id = this.$route.params.id
-      let url = '/api/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg' // 推荐列表详细内容，后续页面使用
-      let data = { // 参数
-        disstid: id,
-        type: 1,
-        json: 1,
-        utf8: 1,
-        onlysong: 0,
-        platform: 'yqq',
-        hostUin: 0,
-        needNewCode: 0
-      }
-      console.log(data)
-      this.$axios.get(url, {params: data}).then((res) => {
+      getSongs(id).then((res) => {
         console.log(res)
-        let num1 = res.data.indexOf('(') // 截取第一个（所在位置
-        let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
-        let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
-        console.log(resultData)
-        this.logo = resultData.cdlist[0].logo
-        this.cdList = resultData.cdlist[0]
-        console.log(resultData.cdlist[0])
-        this.songList = resultData.cdlist[0].songlist
+        this.logo = res.cdlist[0].logo
+        this.cdList = res.cdlist[0]
+        console.log(res.cdlist[0])
+        this.songList = res.cdlist[0].songlist
       })
     }
   },
   created () {
-    this.getSongs()
+    this._getSongs()
   }
 }
 </script>
@@ -84,12 +68,14 @@ export default {
 }
 #back-btn {
   position: absolute;
-  top: 5px;
   left: 10px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
 }
 #main-top {
   display: flex;
-  padding: 20px 20px 40px;
+  padding: 40px 20px 40px;
   width: 100%;
   box-sizing: border-box;
   background-color: #999;

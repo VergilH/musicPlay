@@ -1,6 +1,6 @@
 <template>
 <div id="load">
-  <img src="../assets/loading.gif">
+  <!-- <img src="../assets/loading.gif"> -->
   <p><font-awesome-icon icon="redo" spin /></p>
   <p>加载中...</p>
 </div>
@@ -29,6 +29,7 @@ export default {
   height: 100vh;
   text-align: center;
   background-color: #222;
+  color: #fff;
   img {
     display: inline-block;
     width: 40px;

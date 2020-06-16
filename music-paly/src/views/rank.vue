@@ -12,6 +12,10 @@ export default {
     }
   },
   methods: {
+  },
+  created () {
+  },
+  destroyed () {
   }
 }
 </script>

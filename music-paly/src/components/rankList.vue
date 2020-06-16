@@ -1,10 +1,10 @@
 <template>
 <div>
-  <loading v-show="!list.length"></loading>
   <div id="top-icon" >
     <font-awesome-icon icon="pastafarianism" />
   </div>
   <titleComponent></titleComponent>
+  <loading v-show="!list.length"></loading>
   <div class="main-out">
     <div class="main-rank" v-for="(item) in list" :key="item.total" @click="getMusicListDetail(item.id)">
       <img v-lazy="item.picUrl" alt="">
