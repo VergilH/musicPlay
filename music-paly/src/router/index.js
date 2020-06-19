@@ -4,6 +4,7 @@ import rank from '../views/rank.vue'
 import singer from '../views/singer.vue'
 import songs from '../views/songs.vue'
 import search from '../views/search.vue'
+import player from '../views/player.vue'
 import musicPlayList from '../views/musicPlayList.vue'
 import recommend from '../components/recommend.vue'
 import recommendList from '../components/recommendList.vue'
@@ -71,6 +72,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: search
+    },
+    {
+      path: '/player/:id',
+      name: 'player',
+      component: player
     }
   ]
 })

@@ -7,7 +7,7 @@
       </span>
     </div>
     <ul>
-      <li v-for="(song, index) in songList" :key="song.cur_count">
+      <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.data.songmid)">
         <div class="index">{{index + 1}}</div>
         <div class="song-detail">
           <p id="song-name">{{song.data.songname}}</p>
@@ -42,6 +42,12 @@ export default {
         this.songList = res.data.songlist
         this.title = res.data.topinfo.ListName
         this.topImgUrl = res.data.topinfo.pic_v12
+      })
+    },
+    getSongMid (songmid) {
+      let mid = songmid
+      this.$router.push({
+        path: `/player/${mid}`
       })
     }
   },

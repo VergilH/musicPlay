@@ -11,6 +11,26 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/play': {
+        target: 'https://u.y.qq.com',
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          '^/play': ''
+        }
+      },
+      '/music': {
+        target: 'http://ws.stream.qqmusic.qq.com',
+        headers: {
+            referer: 'http://ws.stream.qqmusic.qq.com',
+            host: 'ws.stream.qqmusic.qq.com',
+        },
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/music': ''
+        }
+      },
       '/api': {
         target: 'https://c.y.qq.com/',
         headers: {
