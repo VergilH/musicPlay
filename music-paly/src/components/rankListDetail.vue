@@ -7,7 +7,7 @@
       </span>
     </div>
     <ul>
-      <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.data.songmid)">
+      <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.data.songmid, index)">
         <div class="index">{{index + 1}}</div>
         <div class="song-detail">
           <p id="song-name">{{song.data.songname}}</p>
@@ -44,10 +44,17 @@ export default {
         this.topImgUrl = res.data.topinfo.pic_v12
       })
     },
-    getSongMid (songmid) {
+    getSongMid (songmid, index) { // 路由跳转至播放器页面
+      window.sessionStorage.setItem('playList', JSON.stringify(this.songList)) // 播放列表
       let mid = songmid
+      let i = index
       this.$router.push({
-        path: `/player/${mid}`
+        path: `/player`,
+        query: {
+          songmid: mid,
+          index: i
+        }
+        // path: `/player/${mid}`
       })
     }
   },

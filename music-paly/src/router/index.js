@@ -74,7 +74,7 @@ export default new Router({
       component: search
     },
     {
-      path: '/player/:id',
+      path: '/player',
       name: 'player',
       component: player
     }
