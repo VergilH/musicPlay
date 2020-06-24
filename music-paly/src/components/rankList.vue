@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main">
   <div id="top-icon" >
     <font-awesome-icon icon="pastafarianism" />
   </div>
@@ -55,11 +55,16 @@ export default {
   },
   mounted () {
     this._getMusicRank()
+  },
+  destroyed () {
   }
 }
 </script>
 
 <style lang='scss' scoped>
+.main {
+  width: 100%;
+}
 .main-out {
   width: 100%;
   background-color: #222;
@@ -71,6 +76,7 @@ export default {
   line-height: 40px;
   font-size: 24px;
   color: #fff;
+  background-color: #222;
 }
 .main-inner {
   flex: 1;

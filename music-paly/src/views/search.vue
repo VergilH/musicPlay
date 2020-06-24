@@ -10,7 +10,8 @@
       {{key.k}}
     </span>
   </div>
-  <div class="result" v-for="song in searchRes" :key="song.id">
+  <loading v-show="!searchRes.length"></loading>
+  <div class="result" v-for="(song, index) in searchRes" :key="song.id" @click="getSongMid(song.songmid, index)">
     <p>{{song.songname}}</p>
     <span v-for="singer in song.singer" :key="singer.name" class="singer-album-name">/{{singer.name}}</span>
     <p class="singer-album-name">- {{song.albumname}}</p>
@@ -20,18 +21,21 @@
 
 <script>
 import titleComponent from '../components/titleComponent.vue'
+import loading from '../components/loading.vue'
 import { getHotKey, search } from '../apis/search.js'
 export default {
   name: 'search',
   components: {
-    titleComponent
+    titleComponent,
+    loading
   },
   data () {
     return {
       hotKey: [],
       key: '',
       timeout: null,
-      searchRes: []
+      searchRes: [],
+      theSong: Array
     }
   },
   methods: {
@@ -61,6 +65,19 @@ export default {
         console.log(resultData.data.song.list)
         this.searchRes = resultData.data.song.list
       })
+    },
+    getSongMid (songmid, index) { // 路由跳转至播放器页面
+      window.sessionStorage.setItem('playList', JSON.stringify(this.searchRes)) // 播放列表
+      let mid = songmid
+      let i = index
+      this.$router.push({
+        path: `/player`,
+        query: {
+          songmid: mid,
+          index: i
+        }
+        // path: `/player/${mid}`
+      })
     }
   },
   watch: {
@@ -68,7 +85,6 @@ export default {
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
         search(cur).then((res) => {
-          console.log(res.data)
           let num1 = res.data.indexOf('(') // 截取第一个（所在位置
           let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
           let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
@@ -96,17 +112,33 @@ export default {
 }
 input{
   outline-style: none;
-  border: 1px solid #646464;
-  border-radius: 5px;
+  border: none;
+  border-radius: 6px;
   padding: 8px 10px;
   width: 85%;
   background-color: #646464;
+  box-sizing: border-box;
   font-size: 16px;
   color: #33cc99;
+  animation: myInputOut .5s alternate forwards;
+  &:hover {
+    animation: myInput .5s alternate forwards;
+    /* box-shadow: 2px 2px 1px #33cc99 inset; */
+  }
+}
+@keyframes myInput {
+  from { box-shadow: none; }
+  to { box-shadow: 0px 0px 5px 2px #212121 inset; }
+}
+@keyframes myInputOut {
+  from { box-shadow: 0px 0px 5px 2px #212121 inset }
+  to { box-shadow: none; }
 }
 #search-btn {
   margin: 20px auto;
+  padding: 10px 0;
   width: 100%;
+  background-color: #747474;
 }
 .hot-key {
   margin: 0 15px;

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main">
   <titleComponent></titleComponent>
   <loading v-show="!singer.length"></loading>
   <div v-for="letter in AZ" :key="letter.id" v-show="!!singer.length" :id="getId(letter)">

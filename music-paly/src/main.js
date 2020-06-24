@@ -12,6 +12,10 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import VueLazyload from 'vue-lazyload' // 图片懒加载
 
+window.addEventListener('popstate', function (e) {
+  router.isBack = true
+}, false)
+
 library.add(fas, far, fab)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

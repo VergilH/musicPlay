@@ -1,14 +1,15 @@
 <template>
-<div>
+<div class="main">
+  <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon icon="chevron-left" /></span>
   <div id="top-img" v-bind:style="{backgroundImage: 'url('+url+singermid+url2+')'}"></div>
   <div class="content">
     <ul>
-      <li v-for="(song, index) in singerList" :key="song.id">
+      <li v-for="(song, index) in singerList" :key="song.id" @click="getSongMid(song.songmid, index)">
         <div class="index">{{index + 1}}</div>
         <div class="song-detail">
-          <p id="song-name">{{song.musicData.songname}}</p>
-          <p v-for="singer in song.musicData.singer" :key="singer.name">/{{singer.name}}</p>
-          <p>-  {{song.musicData.albumname}}</p>
+          <p id="song-name">{{song.songname}}</p>
+          <p v-for="singer in song.singer" :key="singer.name">/{{singer.name}}</p>
+          <p>-  {{song.albumname}}</p>
         </div>
       </li>
     </ul>
@@ -33,11 +34,28 @@ export default {
     _getSingerDetail () {
       let singermid = this.$route.params.id
       getSingerDetail(singermid).then((res) => {
-        console.log(res.data.data)
+        console.log(res)
         this.singermid = res.data.data.singer_mid
-        console.log(res.data.data.singer_mid)
         this.singerDetail = res.data.data
-        this.singerList = res.data.data.list
+        let list = []
+        for (let i = 0; i < res.data.data.list.length; i++) { // 重排数据格式
+          list.push(res.data.data.list[i].musicData)
+        }
+        this.singerList = list
+        console.log(list)
+      })
+    },
+    getSongMid (songmid, index) { // 路由跳转至播放器页面
+      window.sessionStorage.setItem('playList', JSON.stringify(this.singerList)) // 播放列表
+      let mid = songmid
+      let i = index
+      this.$router.push({
+        path: `/player`,
+        query: {
+          songmid: mid,
+          index: i
+        }
+        // path: `/player/${mid}`
       })
     }
   },
@@ -57,6 +75,14 @@ export default {
   height: 280px;
   background: center no-repeat;
   background-size: cover;
+}
+#back-btn {
+  z-index: 10;
+  position: absolute;
+  left: 10px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
 }
 .content {
   position: relative;

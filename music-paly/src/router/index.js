@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import rank from '../views/rank.vue'
-import singer from '../views/singer.vue'
-import songs from '../views/songs.vue'
-import search from '../views/search.vue'
-import player from '../views/player.vue'
-import musicPlayList from '../views/musicPlayList.vue'
-import recommend from '../components/recommend.vue'
-import recommendList from '../components/recommendList.vue'
-import singers from '../components/singers.vue'
-import singerDetail from '../components/singerDetail.vue'
-import rankList from '../components/rankList.vue'
-import rankListDetail from '../components/rankListDetail.vue'
+const collect = r => require(['@/views/collect'], r)
+const search = r => require(['@/views/search'], r)
+const player = r => require(['@/views/player'], r)
+const songs = r => require(['@/views/songs'], r)
+const recommend = r => require(['@/components/recommend'], r)
+const recommendList = r => require(['@/components/recommendList'], r)
+const singer = r => require(['@/views/singer'], r)
+const singers = r => require(['@/components/singers'], r)
+const singerDetail = r => require(['@/components/singerDetail'], r)
+const rank = r => require(['@/views/rank'], r)
+const rankList = r => require(['@/components/rankList'], r)
+const rankListDetail = r => require(['@/components/rankListDetail'], r)
 
 Vue.use(Router)
 

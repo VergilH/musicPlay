@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main">
   <div class="main">
     <div id="top-img" v-bind:style="{backgroundImage: 'url('+ topImgUrl +')'}">
       <span id="back-btn" @click="$router.back(-1)">
@@ -7,12 +7,12 @@
       </span>
     </div>
     <ul>
-      <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.data.songmid, index)">
+      <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.songmid, index)">
         <div class="index">{{index + 1}}</div>
         <div class="song-detail">
-          <p id="song-name">{{song.data.songname}}</p>
-          <p v-for="singer in song.data.singer" :key="singer.name">/{{singer.name}}</p>
-          <p>- {{song.data.albumname}}</p>
+          <p id="song-name">{{song.songname}}</p>
+          <p v-for="singer in song.singer" :key="singer.name">/{{singer.name}}</p>
+          <p>- {{song.albumname}}</p>
         </div>
       </li>
     </ul>
@@ -38,10 +38,14 @@ export default {
     getMusicListDetail () { // 点击先获取点击元素的排行榜id
       let topid = this.$route.params.id // 榜单id
       getRankDetail(topid).then((res) => { // 修改topid即可
-        console.log(res)
-        this.songList = res.data.songlist
         this.title = res.data.topinfo.ListName
         this.topImgUrl = res.data.topinfo.pic_v12
+        let newList = []
+        for (let i = 0; i < res.data.songlist.length; i++) { // 调整数据格式
+          newList.push(res.data.songlist[i].data)
+        }
+        console.log(newList)
+        this.songList = newList
       })
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面
@@ -60,6 +64,8 @@ export default {
   },
   created () {
     this.getMusicListDetail()
+  },
+  destroyed () {
   }
 }
 </script>

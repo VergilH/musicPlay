@@ -1,18 +1,20 @@
 <template>
-<div>
+<div class="main">
   <titleComponent></titleComponent>
   <loading v-show="!lists.length"></loading>
-  <div class="main-inner">
-    <h4>热门歌单推荐</h4>
-    <ul>
-      <li class="main-list" v-for="list in lists" :key="list.re" @click="goMusicPage(list.dissid)">
-        <img v-lazy="list.imgurl">
-        <div class="list-text">
-          <span class="list-detail">{{list.dissname}}</span>
-          <span class="list-detail">创建者:{{list.creator.name}}</span>
-        </div>
-      </li>
-    </ul>
+  <div class="main-out">
+    <div class="main-inner">
+      <h4>热门歌单推荐</h4>
+      <ul>
+        <li class="main-list" v-for="list in lists" :key="list.re" @click="goMusicPage(list.dissid)">
+          <img v-lazy="list.imgurl">
+          <div class="list-text">
+            <span class="list-detail">{{list.dissname}}</span>
+            <span class="list-detail">创建者:{{list.creator.name}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </template>
@@ -51,6 +53,8 @@ export default {
   },
   mounted () {
     this._getList()
+  },
+  destroyed () {
   }
 }
 </script>
@@ -61,7 +65,7 @@ export default {
   overflow: hidden;
 }
 .main-inner {
-  flex: 1;
+  width: 100%;
   background-color: #222;
   color: #fff;
 }
@@ -77,6 +81,7 @@ img {
 ul {
   margin: 0;
   padding: 0;
+  width: 100%;
   text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -85,12 +90,12 @@ ul {
   font-size: 14px;
 }
 .main-list {
-  list-style-type: none;
   display: flex;
   padding: 20px 20px 0 20px;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  list-style-type: none;
 }
 .list-text {
   display: flex;

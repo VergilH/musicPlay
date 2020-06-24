@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main">
   <div class="main">
     <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon icon="chevron-left" /></span>
     <div id="main-top">
@@ -12,10 +12,14 @@
         </span>
         <p id="desc">{{cdList.desc}}</p>
       </div>
+      <button @click="unique()"></button>
     </div>
     <ul>
       <li v-for="(song, index) in songList" :key="song.id">
-        <div class="index">{{index + 1}}</div>
+        <div class="index" @click="getSongMid(song.songmid, index)">{{index + 1}}</div>
+        <div id="like" @click="addCollect(song)">
+          <font-awesome-icon icon="heart" />
+        </div>
         <div class="song-detail">
           <p id="song-name">{{song.songname}}</p>
           <p v-for="singer in song.singer" :key="singer.name">/{{singer.name}}</p>
@@ -52,10 +56,41 @@ export default {
         console.log(res.cdlist[0])
         this.songList = res.cdlist[0].songlist
       })
+    },
+    getSongMid (songmid, index) { // 路由跳转至播放器页面
+      window.sessionStorage.setItem('playList', JSON.stringify(this.songList)) // 播放列表
+      let mid = songmid
+      let i = index
+      this.$router.push({
+        path: `/player`,
+        query: {
+          songmid: mid,
+          index: i
+        }
+        // path: `/player/${mid}`
+      })
+    },
+    addCollect (song) { // 添加到收藏夹
+      let older = JSON.parse(localStorage.getItem('collectList')) // 先读取
+      older.push(song) // 添加
+      console.log(older)
+      window.localStorage.setItem('collectList', JSON.stringify(older)) // 后存入
+    },
+    unique () {
+      var n = []; //一个新的临时数组
+      let older = JSON.parse(localStorage.getItem('collectList'))
+      for(var i = 0; i < older.length; i++){ //遍历当前数组
+        if (this.songList.indexOf(older[i]) == -1)
+          n.push(older[i]);
+          console.log(n)
+      }
+      return n;
     }
   },
   created () {
     this._getSongs()
+  },
+  destroyed () {
   }
 }
 </script>
@@ -141,6 +176,7 @@ ul {
   background-color: #222;
 }
 li {
+  position: relative;
   display: flex;
   width: 100%;
   height: 60px;
@@ -152,6 +188,14 @@ li {
     line-height: 60px;
     text-align: center;
     color: #33CC99;
+  }
+  #like {
+    z-index: 100;
+    position: absolute;
+    right: 20px;
+    width: 30px;
+    line-height: 60px;
+    text-align: center;
   }
   .song-detail {
     flex: 1;
