@@ -12,7 +12,7 @@
         </span>
         <p id="desc">{{cdList.desc}}</p>
       </div>
-      <button @click="unique()"></button>
+      <button @click="find()"></button>
     </div>
     <ul>
       <li v-for="(song, index) in songList" :key="song.id">
@@ -71,20 +71,36 @@ export default {
       })
     },
     addCollect (song) { // 添加到收藏夹
-      let older = JSON.parse(localStorage.getItem('collectList')) // 先读取
-      older.push(song) // 添加
-      console.log(older)
-      window.localStorage.setItem('collectList', JSON.stringify(older)) // 后存入
+      let older = JSON.parse(localStorage.getItem('collectList')) || [] // 先读取 无数据时值为null 不可用push()方法
+      older.push(song)
+      window.localStorage.setItem('collectList', JSON.stringify(older))
     },
-    unique () {
-      var n = []; //一个新的临时数组
+    unique () { // 查找相同值
+      var n = [] // 一个新的临时数组
       let older = JSON.parse(localStorage.getItem('collectList'))
-      for(var i = 0; i < older.length; i++){ //遍历当前数组
-        if (this.songList.indexOf(older[i]) == -1)
-          n.push(older[i]);
-          console.log(n)
+      if (older != null) {
+        for (var i = 0; i < older.length; i++) { // 遍历当前数组
+          if (this.songList.indexOf(older[i]) === -1) {
+            console.log(this.songList)
+            console.log(older[i])
+            n.push(older[i])
+            console.log(n)
+          }
+        }
+      } else {
+        console.log(older)
       }
-      return n;
+      return n
+    },
+    find () {
+      let a = []
+      let older = JSON.parse(localStorage.getItem('collectList'))
+      for (var i = 0; i < older.length; i++) {
+        if (JSON.stringify(this.songList).indexOf(JSON.stringify(older[i])) > -1) {
+          a.push(older[i].songmid) // 获取刀需要渲染的歌曲
+        }
+      }
+      console.log(a) // 转换成字符串判断是否含有相同数据
     }
   },
   created () {
