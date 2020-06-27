@@ -1,7 +1,8 @@
 <template>
 <div class="main">
-  <div id="top-icon" >
+  <div id="top-myths-icon" >
     <font-awesome-icon icon="pastafarianism" />
+    <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
   <titleComponent></titleComponent>
   <loading v-show="!list.length"></loading>
@@ -49,6 +50,11 @@ export default {
       this.$router.push({
         path: `/rank/rankdetail/${topid}`
       })
+    },
+    goCollectPage () {
+      this.$router.push({
+        path: `/collect`
+      })
     }
   },
   created () {
@@ -69,14 +75,6 @@ export default {
   width: 100%;
   background-color: #222;
   overflow: hidden;
-}
-#top-icon {
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  font-size: 24px;
-  color: #fff;
-  background-color: #222;
 }
 .main-inner {
   flex: 1;

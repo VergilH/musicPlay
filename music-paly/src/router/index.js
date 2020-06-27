@@ -77,6 +77,11 @@ export default new Router({
       path: '/player',
       name: 'player',
       component: player
+    },
+    {
+      path: '/collect',
+      name: 'collect',
+      component: collect
     }
   ]
 })

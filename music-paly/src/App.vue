@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,6 +52,21 @@ body {
 .main {
   position: relative;
   width: 100%;
+}
+#top-myths-icon {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 24px;
+  color: #fff;
+  background-color: #222;
+  .collect {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 18px;
+  }
 }
 .slide-left-enter, .slide-right-leave-to {
   transform: translateX(100%)

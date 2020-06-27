@@ -3,22 +3,26 @@
   <div class="main">
     <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon icon="chevron-left" /></span>
     <div id="main-top">
-      <img v-bind:src="logo">
+      <img :src="logo">
       <div id="list-title">
         <p id="title">{{cdList.dissname}}</p>
         <span id="creator">
-          <img v-bind:src="cdList.headurl" alt="">
+          <img :src="cdList.headurl" alt="">
           <p>{{cdList.nickname}}</p>
         </span>
         <p id="desc">{{cdList.desc}}</p>
       </div>
-      <button @click="find()"></button>
     </div>
     <ul>
       <li v-for="(song, index) in songList" :key="song.id">
         <div class="index" @click="getSongMid(song.songmid, index)">{{index + 1}}</div>
         <div id="like" @click="addCollect(song)">
-          <font-awesome-icon icon="heart" />
+          <span class="red" v-if="redHeart(song.songmid)">
+            <font-awesome-icon icon="heart" />
+          </span>
+          <span v-else>
+            <font-awesome-icon :icon="['far', 'heart']" />
+          </span>
         </div>
         <div class="song-detail">
           <p id="song-name">{{song.songname}}</p>
@@ -40,21 +44,21 @@ export default {
     this.disstid = id
     console.log(id)
     return {
-      disstid: '1',
+      disstid: '',
       logo: '',
       cdList: '',
-      songList: []
+      songList: [],
+      songmid: Array
     }
   },
   methods: {
     _getSongs () { // 歌单内容
       let id = this.$route.params.id
       getSongs(id).then((res) => {
-        console.log(res)
         this.logo = res.cdlist[0].logo
         this.cdList = res.cdlist[0]
-        console.log(res.cdlist[0])
         this.songList = res.cdlist[0].songlist
+        this.updataCollect()
       })
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面
@@ -67,44 +71,38 @@ export default {
           songmid: mid,
           index: i
         }
-        // path: `/player/${mid}`
       })
     },
     addCollect (song) { // 添加到收藏夹
       let older = JSON.parse(localStorage.getItem('collectList')) || [] // 先读取 无数据时值为null 不可用push()方法
       older.push(song)
       window.localStorage.setItem('collectList', JSON.stringify(older))
+      this.updataCollect()
     },
-    unique () { // 查找相同值
-      var n = [] // 一个新的临时数组
-      let older = JSON.parse(localStorage.getItem('collectList'))
-      if (older != null) {
-        for (var i = 0; i < older.length; i++) { // 遍历当前数组
-          if (this.songList.indexOf(older[i]) === -1) {
-            console.log(this.songList)
-            console.log(older[i])
-            n.push(older[i])
-            console.log(n)
-          }
-        }
-      } else {
-        console.log(older)
-      }
-      return n
-    },
-    find () {
+    updataCollect () { // 更新收藏内容渲染，需要及时更新
       let a = []
-      let older = JSON.parse(localStorage.getItem('collectList'))
+      let older = JSON.parse(localStorage.getItem('collectList')) || []
       for (var i = 0; i < older.length; i++) {
         if (JSON.stringify(this.songList).indexOf(JSON.stringify(older[i])) > -1) {
-          a.push(older[i].songmid) // 获取刀需要渲染的歌曲
+          a.push(older[i].songmid) // 获取到需要渲染的歌曲
         }
       }
+      this.songmid = a
       console.log(a) // 转换成字符串判断是否含有相同数据
+    },
+    redHeart (id) {
+      let mid = id
+      if (this.songmid.indexOf(mid) === -1) {
+        return false
+      } else {
+        return true
+      }
     }
   },
   created () {
     this._getSongs()
+  },
+  mounted () {
   },
   destroyed () {
   }
@@ -236,5 +234,8 @@ li {
   white-space: normal;
   font-size: 14px;
   color: #fff;
+}
+.red {
+  color: #FF253A;
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
 <div class="main">
+  <div id="top-myths-icon" >
+    <font-awesome-icon icon="pastafarianism" />
+  </div>
   <titleComponent></titleComponent>
   <loading v-show="!lists.length"></loading>
   <div class="main-out">

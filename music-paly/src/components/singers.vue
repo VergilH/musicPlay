@@ -1,5 +1,8 @@
 <template>
 <div class="main">
+  <div id="top-myths-icon" >
+    <font-awesome-icon icon="pastafarianism" />
+  </div>
   <titleComponent></titleComponent>
   <loading v-show="!singer.length"></loading>
   <div v-for="letter in AZ" :key="letter.id" v-show="!!singer.length" :id="getId(letter)">

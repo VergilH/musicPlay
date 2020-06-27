@@ -1,5 +1,8 @@
 <template>
 <div class="main">
+  <div id="top-myths-icon" >
+    <font-awesome-icon icon="pastafarianism" />
+  </div>
   <titleComponent></titleComponent>
   <div id="search-btn">
     <input type="text" placeholder="搜索" v-model="key" @click="getKey()" maxlength="20">
