@@ -67,6 +67,13 @@ body {
     right: 20px;
     font-size: 18px;
   }
+  .back-btn {
+    position: absolute;
+    left: 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+  }
 }
 .slide-left-enter, .slide-right-leave-to {
   transform: translateX(100%)

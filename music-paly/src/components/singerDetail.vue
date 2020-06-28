@@ -4,6 +4,7 @@
   <div id="top-img" v-bind:style="{backgroundImage: 'url('+url+singermid+url2+')'}"></div>
   <div class="content">
     <ul>
+      <loading v-show="!singerList.length"></loading>
       <li v-for="(song, index) in singerList" :key="song.id" @click="getSongMid(song.songmid, index)">
         <div class="index">{{index + 1}}</div>
         <div class="song-detail">
@@ -19,8 +20,12 @@
 
 <script>
 import { getSingerDetail } from '../apis/singer.js'
+import loading from './loading.vue'
 export default {
   name: 'singerdetail',
+  components: {
+    loading
+  },
   data () {
     return {
       singermid: '',

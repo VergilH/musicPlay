@@ -7,13 +7,14 @@
       <div id="list-title">
         <p id="title">{{cdList.dissname}}</p>
         <span id="creator">
-          <img :src="cdList.headurl" alt="">
+          <img :src="cdList.headurl">
           <p>{{cdList.nickname}}</p>
         </span>
         <p id="desc">{{cdList.desc}}</p>
       </div>
     </div>
     <ul>
+      <loading v-show="isLoading"></loading>
       <li v-for="(song, index) in songList" :key="song.id">
         <div class="index" @click="getSongMid(song.songmid, index)">{{index + 1}}</div>
         <div id="like" @click="addCollect(song)">
@@ -37,8 +38,12 @@
 
 <script>
 import { getSongs } from '@/apis/songs.js'
+import loading from './loading.vue'
 export default {
   name: 'recommendList',
+  components: {
+    loading
+  },
   data () {
     let id = this.$route.params.id // 接收路由参数
     this.disstid = id
@@ -48,17 +53,20 @@ export default {
       logo: '',
       cdList: '',
       songList: [],
-      songmid: Array
+      songmid: Array,
+      isLoading: Boolean
     }
   },
   methods: {
     _getSongs () { // 歌单内容
+      this.isLoading = true
       let id = this.$route.params.id
       getSongs(id).then((res) => {
         this.logo = res.cdlist[0].logo
         this.cdList = res.cdlist[0]
         this.songList = res.cdlist[0].songlist
         this.updataCollect()
+        this.isLoading = false
       })
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面

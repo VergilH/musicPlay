@@ -7,6 +7,7 @@
       </span>
     </div>
     <ul>
+      <loading v-show="!songList.length"></loading>
       <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.songmid, index)">
         <div class="index">{{index + 1}}</div>
         <div class="song-detail">
@@ -22,8 +23,12 @@
 
 <script>
 import { getRankDetail } from '../apis/rank.js'
+import loading from './loading.vue'
 export default {
   name: 'rankListDetail',
+  components: {
+    loading
+  },
   data () {
     let id = this.$route.params.id // 接收路由参数
     this.disstid = id
@@ -31,11 +36,13 @@ export default {
       disstid: '',
       songList: [],
       title: '',
-      topImgUrl: ''
+      topImgUrl: '',
+      isLoading: Boolean
     }
   },
   methods: {
     getMusicListDetail () { // 点击先获取点击元素的排行榜id
+      this.isLoading = true
       let topid = this.$route.params.id // 榜单id
       getRankDetail(topid).then((res) => { // 修改topid即可
         this.title = res.data.topinfo.ListName
@@ -46,6 +53,7 @@ export default {
         }
         console.log(newList)
         this.songList = newList
+        this.isLoading = false
       })
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面

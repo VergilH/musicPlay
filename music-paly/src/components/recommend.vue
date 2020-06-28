@@ -2,6 +2,7 @@
 <div class="main">
   <div id="top-myths-icon" >
     <font-awesome-icon icon="pastafarianism" />
+    <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
   <titleComponent></titleComponent>
   <loading v-show="!lists.length"></loading>
@@ -49,6 +50,11 @@ export default {
       // console.log(dissid)
       this.$router.push({
         path: `/songs/recommendlist/${id}`
+      })
+    },
+    goCollectPage () {
+      this.$router.push({
+        path: `/collect`
       })
     }
   },

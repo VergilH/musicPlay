@@ -2,10 +2,11 @@
 <div class="main">
   <div id="top-myths-icon" >
     <font-awesome-icon icon="pastafarianism" />
+    <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
   <titleComponent></titleComponent>
   <div id="search-btn">
-    <input type="text" placeholder="搜索" v-model="key" @click="getKey()" maxlength="20">
+    <input type="text" placeholder="搜索" spellcheck="false" v-model="key" @click="getKey()" maxlength="20">
   </div>
   <div class="hot-key">
     <p>热门搜索</p>
@@ -13,7 +14,7 @@
       {{key.k}}
     </span>
   </div>
-  <loading v-show="!searchRes.length"></loading>
+  <loading v-show="isLoading"></loading>
   <div class="result" v-for="(song, index) in searchRes" :key="song.id" @click="getSongMid(song.songmid, index)">
     <p>{{song.songname}}</p>
     <span v-for="singer in song.singer" :key="singer.name" class="singer-album-name">/{{singer.name}}</span>
@@ -38,7 +39,8 @@ export default {
       key: '',
       timeout: null,
       searchRes: [],
-      theSong: Array
+      theSong: Array,
+      isLoading: false
     }
   },
   methods: {
@@ -51,11 +53,9 @@ export default {
     getSearch () { // 搜索关键词
       let key = this.key // 对参数赋值
       search(key).then((res) => {
-        console.log(res.data)
         let num1 = res.data.indexOf('(') // 截取第一个（所在位置
         let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
-        let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
-        console.log(resultData.data.song.list)
+        let resultData = JSON.parse(res.data.substring(num1 + 1, num2))
         this.searchRes = resultData.data.song.list
       })
     },
@@ -64,8 +64,7 @@ export default {
       search(key).then((res) => {
         let num1 = res.data.indexOf('(') // 截取第一个（所在位置
         let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
-        let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
-        console.log(resultData.data.song.list)
+        let resultData = JSON.parse(res.data.substring(num1 + 1, num2))
         this.searchRes = resultData.data.song.list
       })
     },
@@ -81,18 +80,25 @@ export default {
         }
         // path: `/player/${mid}`
       })
+    },
+    goCollectPage () {
+      this.$router.push({
+        path: `/collect`
+      })
     }
   },
   watch: {
     key (cur, old) { // 监听input触发请求
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
+        this.isLoading = true
         search(cur).then((res) => {
           let num1 = res.data.indexOf('(') // 截取第一个（所在位置
           let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
           let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
           console.log(resultData.data.song.list)
           this.searchRes = resultData.data.song.list
+          this.isLoading = false
         })
       }, 600)
     }
@@ -131,10 +137,10 @@ input{
 }
 @keyframes myInput {
   from { box-shadow: none; }
-  to { box-shadow: 0px 0px 5px 2px #212121 inset; }
+  to { box-shadow: 0px 0px 5px 2px #323232 inset; }
 }
 @keyframes myInputOut {
-  from { box-shadow: 0px 0px 5px 2px #212121 inset }
+  from { box-shadow: 0px 0px 5px 2px #323232 inset }
   to { box-shadow: none; }
 }
 #search-btn {

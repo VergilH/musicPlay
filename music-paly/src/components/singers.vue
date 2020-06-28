@@ -2,6 +2,7 @@
 <div class="main">
   <div id="top-myths-icon" >
     <font-awesome-icon icon="pastafarianism" />
+    <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
   <titleComponent></titleComponent>
   <loading v-show="!singer.length"></loading>
@@ -63,6 +64,11 @@ export default {
     },
     getId: function (id) { // 给元素加上id
       return id
+    },
+    goCollectPage () {
+      this.$router.push({
+        path: `/collect`
+      })
     }
   },
   created () {
