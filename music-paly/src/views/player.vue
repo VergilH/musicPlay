@@ -16,7 +16,7 @@
       <div id="scroll-point"></div>
     </div>
     <div class="play-btn" @click="play()"><font-awesome-icon icon="play" /></div>
-    <audio ref="audio" :src="playUrl"></audio>
+    <audio ref="audio" :src="playUrl" :currentTime="curTime"></audio>
   </div>
 </div>
 </template>
@@ -31,7 +31,8 @@ export default {
       playList: Array,
       name: String,
       singers: Array,
-      albumImg: String
+      albumImg: String,
+      curTime: Number
     }
   },
   methods: {
@@ -43,6 +44,9 @@ export default {
       this.$axios.get(url)
         .then((res) => { // 播放链接需要使用数据拼接
           console.log(res.data.req_0.data)
+          if (!res.data.req_0.data.midurlinfo[0].purl) { // 无法获取到值则无法播放
+            alert('因版权原因无法播放')
+          }
           let playUrl = '/music/' + res.data.req_0.data.midurlinfo[0].purl // sip[0]+purl = http://ws.stream.qqmusic.qq.com + C400 + params
           console.log(playUrl)
           this.playUrl = playUrl // 播放链接
@@ -61,8 +65,17 @@ export default {
       let url = '/img/music/photo_new/T002R180x180M000' + albummid + '.jpg'
       this.albumImg = url
     },
-    play () {
+    play () { // 播放
+      let music = this.$refs.audio
       this.$refs.audio.play()
+      console.log(music.duration)
+      console.log(this.curTime)
+    },
+    pause () {
+      this.$refs.audio.pause()
+    },
+    time () {
+      console.log('1')
     }
   },
   created () {
@@ -79,6 +92,9 @@ export default {
           this.getAlbumImg()
         }
       }
+    },
+    'this.$refs.audio.currentTime': function () {
+      console.log(this.$refs.audio.currentTime)
     }
   },
   destroyed () {
