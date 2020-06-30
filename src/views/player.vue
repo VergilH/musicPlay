@@ -15,8 +15,13 @@
     <div class="player-scroll">
       <div id="scroll-point"></div>
     </div>
-    <div class="play-btn" @click="play()"><font-awesome-icon icon="play" /></div>
-    <audio ref="audio" :src="playUrl" :currentTime="curTime"></audio>
+    <div class="play-btn" @click="play()"><font-awesome-icon icon="play" /><font-awesome-icon icon="pause" /></div>
+    <audio ref="audio"
+      @timeupdate="onTimeUpdate"
+      @play="isPlay"
+      @pause="isPause"
+      :src="playUrl">
+    </audio>
   </div>
 </div>
 </template>
@@ -32,7 +37,8 @@ export default {
       name: String,
       singers: Array,
       albumImg: String,
-      curTime: Number
+      curTime: Number,
+      totalTime: Number
     }
   },
   methods: {
@@ -69,13 +75,21 @@ export default {
       let music = this.$refs.audio
       this.$refs.audio.play()
       console.log(music.duration)
+      this.totalTime = music.duration
       console.log(this.curTime)
     },
     pause () {
       this.$refs.audio.pause()
     },
-    time () {
-      console.log('1')
+    isPlay () {
+      console.log('music playing')
+    },
+    isPause () {
+      console.log('music pause')
+    },
+    onTimeUpdate (res) { // audio时间更新触发，用于监听播放时刻
+      console.log(res.target.currentTime)
+      this.curTime = res.target.currentTime
     }
   },
   created () {
@@ -92,9 +106,6 @@ export default {
           this.getAlbumImg()
         }
       }
-    },
-    'this.$refs.audio.currentTime': function () {
-      console.log(this.$refs.audio.currentTime)
     }
   },
   destroyed () {
