@@ -4,7 +4,6 @@
     <font-awesome-icon icon="pastafarianism" />
     <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
-  <titleComponent></titleComponent>
   <div id="search-btn">
     <input type="text" placeholder="搜索" spellcheck="false" v-model="key" @click="getKey()" maxlength="20">
   </div>
@@ -24,13 +23,11 @@
 </template>
 
 <script>
-import titleComponent from '../components/titleComponent.vue'
 import loading from '../components/loading.vue'
 import { getHotKey, search } from '../apis/search.js'
 export default {
   name: 'search',
   components: {
-    titleComponent,
     loading
   },
   data () {
@@ -144,7 +141,7 @@ input{
   to { box-shadow: none; }
 }
 #search-btn {
-  margin: 20px auto;
+  margin: 0 auto 20px;
   padding: 10px 0;
   width: 100%;
   background-color: #747474;

@@ -4,9 +4,9 @@
     <font-awesome-icon icon="pastafarianism" />
     <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
-  <titleComponent></titleComponent>
   <loading v-show="!list.length"></loading>
   <div class="main-out">
+    <h4>官方推荐歌单</h4>
     <div class="main-rank" v-for="(item) in list" :key="item.total" @click="getMusicListDetail(item.id)">
       <img v-lazy="item.picUrl" alt="">
       <div class="main-rank-list">
@@ -21,13 +21,11 @@
 </template>
 
 <script>
-import titleComponent from './titleComponent.vue'
 import loading from './loading.vue'
 import { getMusicRank, getRankDetail } from '../apis/rank.js'
 export default {
-  name: 'rankList',
+  name: 'ranklist',
   components: {
-    titleComponent,
     loading
   },
   data () {
@@ -75,6 +73,10 @@ export default {
   width: 100%;
   background-color: #222;
   overflow: hidden;
+}
+h4 {
+  margin: 0;
+  color: #fff;
 }
 .main-inner {
   flex: 1;

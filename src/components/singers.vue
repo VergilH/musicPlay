@@ -4,7 +4,6 @@
     <font-awesome-icon icon="pastafarianism" />
     <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
-  <titleComponent></titleComponent>
   <loading v-show="!singer.length"></loading>
   <div v-for="letter in AZ" :key="letter.id" v-show="!!singer.length" :id="getId(letter)">
     <ul>
@@ -20,14 +19,12 @@
 </template>
 
 <script>
-import titleComponent from './titleComponent.vue'
 import loading from './loading.vue'
 import alphabet from './alphabet.vue'
 import { getSinger, getSingerDetail } from '../apis/singer.js'
 export default {
   name: 'singers',
   components: {
-    titleComponent,
     loading,
     alphabet
   },
@@ -103,7 +100,6 @@ ul {
   height: 40px;
 }
 .letter {
-  padding-left: 10px;
   border-bottom: 1px solid #000;
   line-height: 17px;
   box-sizing: border-box;

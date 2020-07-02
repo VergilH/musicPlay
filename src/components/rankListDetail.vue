@@ -5,6 +5,7 @@
       <span id="back-btn" @click="$router.back(-1)">
         <font-awesome-icon :icon="['fas', 'chevron-left']" />
       </span>
+      <topbackbtn></topbackbtn>
     </div>
     <ul>
       <loading v-show="!songList.length"></loading>
@@ -24,10 +25,12 @@
 <script>
 import { getRankDetail } from '../apis/rank.js'
 import loading from './loading.vue'
+import topbackbtn from './topbackbtn.vue'
 export default {
   name: 'rankListDetail',
   components: {
-    loading
+    loading,
+    topbackbtn
   },
   data () {
     let id = this.$route.params.id // 接收路由参数

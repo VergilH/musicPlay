@@ -1,6 +1,9 @@
 <template>
 <div class="main">
-  <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon icon="chevron-left" /></span>
+  <span id="back-btn" @click="$router.back(-1)">
+    <font-awesome-icon icon="chevron-left" />
+  </span>
+  <topbackbtn></topbackbtn>
   <div id="top-img" v-bind:style="{backgroundImage: 'url('+url+singermid+url2+')'}"></div>
   <div class="content">
     <ul>
@@ -21,10 +24,12 @@
 <script>
 import { getSingerDetail } from '../apis/singer.js'
 import loading from './loading.vue'
+import topbackbtn from './topbackbtn.vue'
 export default {
   name: 'singerdetail',
   components: {
-    loading
+    loading,
+    topbackbtn
   },
   data () {
     return {

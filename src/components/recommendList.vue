@@ -1,7 +1,10 @@
 <template>
 <div class="main">
   <div class="main">
-    <span id="back-btn" @click="$router.back(-1)"><font-awesome-icon icon="chevron-left" /></span>
+    <span id="back-btn" @click="$router.back(-1)">
+      <font-awesome-icon icon="chevron-left" />
+    </span>
+    <topbackbtn></topbackbtn>
     <div id="main-top">
       <img :src="logo">
       <div id="list-title">
@@ -39,10 +42,12 @@
 <script>
 import { getSongs } from '@/apis/songs.js'
 import loading from './loading.vue'
+import topbackbtn from './topbackbtn.vue'
 export default {
   name: 'recommendList',
   components: {
-    loading
+    loading,
+    topbackbtn
   },
   data () {
     let id = this.$route.params.id // 接收路由参数

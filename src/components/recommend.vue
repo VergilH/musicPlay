@@ -4,7 +4,6 @@
     <font-awesome-icon icon="pastafarianism" />
     <font-awesome-icon class="collect" icon="user-astronaut" @click="goCollectPage()" />
   </div>
-  <titleComponent></titleComponent>
   <loading v-show="!lists.length"></loading>
   <div class="main-out">
     <div class="main-inner">
@@ -24,13 +23,11 @@
 </template>
 
 <script>
-import titleComponent from './titleComponent.vue'
 import loading from './loading.vue'
 import { getList } from '@/apis/songs.js'
 export default {
-  name: 'songs',
+  name: 'recommend',
   components: {
-    titleComponent,
     loading
   },
   data () {

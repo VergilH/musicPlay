@@ -5,13 +5,16 @@
         <router-view class="router"></router-view>
       </keep-alive>
     </transition>
+    <tabbar></tabbar>
   </div>
 </template>
 
 <script>
+import tabbar from './components/tabbar.vue'
 export default {
   name: 'App',
   components: {
+    tabbar
   },
   data () {
     return {
@@ -52,6 +55,7 @@ body {
 .main {
   position: relative;
   width: 100%;
+  padding-bottom: 55px;
 }
 #top-myths-icon {
   position: relative;
