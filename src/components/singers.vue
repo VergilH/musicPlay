@@ -39,7 +39,7 @@ export default {
   methods: {
     _getSinger () { // 获取歌手列表
       getSinger().then((res) => {
-        let data = res.data.data.list
+        let data = res.data.list
         data.sort((a, b) => { // 按A-Z重新排序
           return a['Findex'].localeCompare(b['Findex'])
         })

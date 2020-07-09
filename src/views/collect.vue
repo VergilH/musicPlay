@@ -75,6 +75,7 @@ export default {
 <style lang='scss' scoped>
 .main {
   min-height: 100vh;
+  background-color: #222;
 }
 #collect-list {
   width: 100%;

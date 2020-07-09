@@ -48,11 +48,12 @@ export default {
       this.isLoading = true
       let topid = this.$route.params.id // 榜单id
       getRankDetail(topid).then((res) => { // 修改topid即可
-        this.title = res.data.topinfo.ListName
-        this.topImgUrl = res.data.topinfo.pic_v12
+        console.log(res)
+        this.title = res.topinfo.ListName
+        this.topImgUrl = res.topinfo.pic_v12
         let newList = []
-        for (let i = 0; i < res.data.songlist.length; i++) { // 调整数据格式
-          newList.push(res.data.songlist[i].data)
+        for (let i = 0; i < res.songlist.length; i++) { // 调整数据格式
+          newList.push(res.songlist[i].data)
         }
         console.log(newList)
         this.songList = newList

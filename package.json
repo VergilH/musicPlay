@@ -20,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "axios": "^0.19.2",
+    "jsonp": "^0.2.1",
     "node-sass": "^4.14.1",
     "vue": "^2.5.2",
     "vue-jsonp": "^0.1.8",

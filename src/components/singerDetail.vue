@@ -45,11 +45,11 @@ export default {
       let singermid = this.$route.params.id
       getSingerDetail(singermid).then((res) => {
         console.log(res)
-        this.singermid = res.data.data.singer_mid
-        this.singerDetail = res.data.data
+        this.singermid = res.data.singer_mid
+        this.singerDetail = res.data
         let list = []
-        for (let i = 0; i < res.data.data.list.length; i++) { // 重排数据格式
-          list.push(res.data.data.list[i].musicData)
+        for (let i = 0; i < res.data.list.length; i++) { // 重排数据格式
+          list.push(res.data.list[i].musicData)
         }
         this.singerList = list
         console.log(list)
@@ -93,6 +93,7 @@ export default {
   height: 40px;
   line-height: 40px;
   font-size: 20px;
+  color: #fff;
 }
 .content {
   position: relative;

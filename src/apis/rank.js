@@ -1,11 +1,31 @@
 import axios from 'axios'
+import jsonp from './jsonp.js'
 import {
   commonParams,
   opts
 } from '@/apis/default.js'
 
 export function getMusicRank () { // 获取排行榜单
-  let url = '/api/v8/fcg-bin/fcg_myqq_toplist.fcg'
+  let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg'
+  let data = {
+    g_tk: 1928093487,
+    format: 'jsonp',
+    inCharset: 'utf-8',
+    outCharset: 'utf-8',
+    notice: 0,
+    uin: 0,
+    needNewCode: 1
+  }
+  return jsonp(url, data, opts
+  ).then((res) => { // QQapi
+    console.log(res)
+    return res
+  })
+}
+
+// axios test
+/* export function getMusicRank () { // 获取排行榜单
+  let url = '/https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg'
   let data = {
     g_tk: 1928093487,
     format: 'jsonp',
@@ -25,10 +45,10 @@ export function getMusicRank () { // 获取排行榜单
     let list = resultData.data.topList // 赋值
     return list
   })
-}
+} */
 
 export function getRankDetail (topid) { // 榜单详细内容
-  let url = '/api/v8/fcg-bin/fcg_v8_toplist_cp.fcg'
+  let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg'
   let data = {
     g_tk: 1928093487,
     format: 'jsonp',
@@ -46,11 +66,9 @@ export function getRankDetail (topid) { // 榜单详细内容
     type: 'top',
     tpl: 3,
     page: 'detail',
-    topid: topid // 从实例获取
+    topid: topid // 从事件获取
   }
-  return axios.get(url, {
-    params: data
-  }).then((res) => {
+  return jsonp(url, data, opts).then((res) => {
     return res
   })
 }

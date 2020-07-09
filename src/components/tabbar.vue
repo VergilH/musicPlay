@@ -79,8 +79,9 @@ export default {
   span {
     display: inline-block;
     padding: 5px 10px;
-    width: 50px;
+    width: 23%;
     border-radius: 10px;
+    box-sizing: border-box;
     color: #fff;
   }
   a {

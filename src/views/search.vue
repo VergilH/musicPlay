@@ -43,7 +43,7 @@ export default {
   methods: {
     getSearchHotKey: function () { // 热门搜索
       getHotKey().then((res) => { // 获取外部js返回数据
-        this.hotKey = res.data.data.hotkey
+        this.hotKey = res.data.hotkey
         console.log(this.hotKey)
       })
     },

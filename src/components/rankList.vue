@@ -39,7 +39,7 @@ export default {
       this.isLoading = true
       getMusicRank().then((res) => {
         console.log(res)
-        this.list = res
+        this.list = res.data.topList
       })
       this.isLoading = false
     },
@@ -53,12 +53,47 @@ export default {
       this.$router.push({
         path: `/collect`
       })
+    },
+    getMusicRank2 () { // 获取排行榜单
+      let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg'
+      let data = {
+        g_tk: 1928093487,
+        format: 'jsonp',
+        inCharset: 'utf-8',
+        outCharset: 'utf-8',
+        notice: 0,
+        uin: 0,
+        needNewCode: 1,
+        callbackQuery: 'jsonpCallback'
+      }
+      const opts = {
+        param: 'jsonpCallback',
+        prefix: 'playlistinfoCallback'
+      }
+      this.$jsonp(url, data, opts).then((res) => { // QQapi
+        console.log(res)
+        /* let num1 = res.data.indexOf('(') // 截取第一个（所在位置
+        let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
+        let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // 对jsonp字符串转化为json
+        // console.log(resultData.data.topList)
+        let list = resultData.data.topList // 赋值
+        return list */
+      })
+      this.$jsonp(`https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg`, {
+        callbackQuery: 'jsonpCallback',
+        // 指定回调的查询字符串的名称（默认callback）,后端可能自定义，比如当前案例约定的是jsonpcallback
+        callbackName: 'jsonpFunc' // 回调函数方法名称
+      }).then(res => {
+        console.log(res)
+        console.log('success')
+      })
     }
   },
   created () {
   },
   mounted () {
     this._getMusicRank()
+    // this.getMusicRank2()
   },
   destroyed () {
   }

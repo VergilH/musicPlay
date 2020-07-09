@@ -19,7 +19,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'rank',
       component: rank,
       children: [
         {
@@ -36,7 +35,6 @@ export default new Router({
     },
     {
       path: '/singer',
-      name: 'singer',
       component: singer,
       children: [
         {
@@ -53,7 +51,6 @@ export default new Router({
     },
     {
       path: '/songs',
-      name: 'songs',
       component: songs,
       children: [
         {
