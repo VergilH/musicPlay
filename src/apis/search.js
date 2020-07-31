@@ -5,6 +5,8 @@ import {
   opts
 } from '@/apis/default.js'
 
+// 搜索API后端禁止跨域
+
 export function getHotKey () { // 热门搜索数据
   let url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
   let data = {

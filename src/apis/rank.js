@@ -6,7 +6,7 @@ import {
 } from '@/apis/default.js'
 
 export function getMusicRank () { // 获取排行榜单
-  let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg'
+  let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg' // QQMusicAPI
   let data = {
     g_tk: 1928093487,
     format: 'jsonp',
@@ -17,8 +17,7 @@ export function getMusicRank () { // 获取排行榜单
     needNewCode: 1
   }
   return jsonp(url, data, opts
-  ).then((res) => { // QQapi
-    console.log(res)
+  ).then((res) => {
     return res
   })
 }

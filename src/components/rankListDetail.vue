@@ -1,7 +1,7 @@
 <template>
 <div class="main">
   <div class="main">
-    <div id="top-img" v-bind:style="{backgroundImage: 'url('+ topImgUrl +')'}">
+    <div id="top-img" v-bind:style="{backgroundImage: `url(${topImgUrl})`}">
       <span id="back-btn" @click="$router.back(-1)">
         <font-awesome-icon :icon="['fas', 'chevron-left']" />
       </span>
@@ -9,12 +9,20 @@
     </div>
     <ul>
       <loading v-show="!songList.length"></loading>
-      <li v-for="(song, index) in songList" :key="song.cur_count" @click="getSongMid(song.songmid, index)">
+      <li v-for="(song, index) in songList" :key="song.cur_count">
         <div class="index">{{index + 1}}</div>
-        <div class="song-detail">
+        <div class="song-detail" @click="getSongMid(song.songmid, index)">
           <p id="song-name">{{song.songname}}</p>
           <p v-for="singer in song.singer" :key="singer.name">/{{singer.name}}</p>
           <p>- {{song.albumname}}</p>
+        </div>
+        <div id="like" @click="addCollect(song)">
+          <span class="red" v-if="redHeart(song.songmid)">
+            <font-awesome-icon icon="heart" />
+          </span>
+          <span v-else>
+            <font-awesome-icon :icon="['far', 'heart']" />
+          </span>
         </div>
       </li>
     </ul>
@@ -40,12 +48,11 @@ export default {
       songList: [],
       title: '',
       topImgUrl: '',
-      isLoading: Boolean
+      songmid: ''
     }
   },
   methods: {
     getMusicListDetail () { // 点击先获取点击元素的排行榜id
-      this.isLoading = true
       let topid = this.$route.params.id // 榜单id
       getRankDetail(topid).then((res) => { // 修改topid即可
         console.log(res)
@@ -57,21 +64,39 @@ export default {
         }
         console.log(newList)
         this.songList = newList
-        this.isLoading = false
+        this.updataCollect()
       })
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面
       window.sessionStorage.setItem('playList', JSON.stringify(this.songList)) // 播放列表
-      let mid = songmid
-      let i = index
       this.$router.push({
         path: `/player`,
         query: {
-          songmid: mid,
-          index: i
+          songmid: songmid,
+          index: index
         }
-        // path: `/player/${mid}`
       })
+    },
+    addCollect (song) { // 添加到收藏夹
+      let older = JSON.parse(localStorage.getItem('collectList')) || [] // 先读取 无数据时值为null
+      older.push(song)
+      window.localStorage.setItem('collectList', JSON.stringify(older))
+      this.updataCollect()
+    },
+    updataCollect () { // 更新收藏内容渲染，需要及时更新
+      let list = []
+      let older = JSON.parse(localStorage.getItem('collectList')) || []
+      console.log(older)
+      console.log(JSON.stringify(this.songList).indexOf(JSON.stringify(older[0].songmid)))
+      this.songmid = list
+      console.log(list) // 转换成字符串判断是否含有相同数据
+    },
+    redHeart (target) {
+      if (this.songmid.indexOf(target) === -1) {
+        return false
+      } else {
+        return true
+      }
     }
   },
   created () {
@@ -128,8 +153,17 @@ li {
     text-align: center;
     color: #33CC99;
   }
+  #like {
+    z-index: 100;
+    position: absolute;
+    right: 10px;
+    width: 60px;
+    line-height: 60px;
+    text-align: center;
+  }
   .song-detail {
     flex: 1;
+    padding-right: 60px;
     width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -142,14 +176,22 @@ li {
     font-size: 12px;
     line-height: 30px;
     color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 #song-name {
   position: relative;
   left: 0;
   display: block;
-  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 14px;
   color: #fff;
+}
+.red {
+  color: #FF253A;
 }
 </style>

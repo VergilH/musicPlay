@@ -5,6 +5,8 @@ import {
   opts
 } from '@/apis/default.js'
 
+// 歌单API不持支跨域
+
 export function getList () {
   let url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
   let data = {
@@ -40,10 +42,7 @@ export function getSongs (id) {
     needNewCode: 0
   }
   return jsonp(url, data, opts).then((res) => {
-    let num1 = res.data.indexOf('(') // 截取第一个（所在位置
-    let num2 = res.data.lastIndexOf(')') // 截取倒数第一个）所在位置
-    let resultData = JSON.parse(res.data.substring(num1 + 1, num2)) // eslint-disable-line no-unused-vars
-    console.log(resultData)
-    return resultData
+    console.log(res)
+    return res
   })
 }

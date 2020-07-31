@@ -17,7 +17,7 @@
       </div>
     </div>
     <ul>
-      <loading v-show="isLoading"></loading>
+      <loading v-show="!songlist.length"></loading>
       <li v-for="(song, index) in songList" :key="song.id">
         <div class="index" @click="getSongMid(song.songmid, index)">{{index + 1}}</div>
         <div id="like" @click="addCollect(song)">
@@ -58,20 +58,17 @@ export default {
       logo: '',
       cdList: '',
       songList: [],
-      songmid: Array,
-      isLoading: Boolean
+      songmid: Array
     }
   },
   methods: {
     _getSongs () { // 歌单内容
-      this.isLoading = true
       let id = this.$route.params.id
       getSongs(id).then((res) => {
         this.logo = res.cdlist[0].logo
         this.cdList = res.cdlist[0]
         this.songList = res.cdlist[0].songlist
         this.updataCollect()
-        this.isLoading = false
       })
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面

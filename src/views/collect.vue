@@ -44,13 +44,11 @@ export default {
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面
       window.sessionStorage.setItem('playList', JSON.stringify(this.songList)) // 播放列表
-      let mid = songmid
-      let i = index
       this.$router.push({
         path: `/player`,
         query: {
-          songmid: mid,
-          index: i
+          songmid: songmid,
+          index: index
         }
       })
     }

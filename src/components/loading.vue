@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  name: 'loading',
   data () {
     return {
     }

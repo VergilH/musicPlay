@@ -32,8 +32,7 @@ export default {
   },
   data () {
     return {
-      lists: [],
-      isDisplay: true
+      lists: []
     }
   },
   methods: {

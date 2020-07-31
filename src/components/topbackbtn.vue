@@ -14,7 +14,7 @@ export default {
       // 滚动条距离页面顶部的距离
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       let backToTop = this.$refs.backToTop.style // 获取节点
-      if (scrollTop > 240) { // 判断距离是否触发
+      if (scrollTop > 50) { // 判断距离是否触发
         backToTop.top = '0px'
         backToTop.animationName = 'isdisplay'
         backToTop.animationDuration = '.5s'

@@ -4,7 +4,7 @@
     <font-awesome-icon icon="chevron-left" />
   </span>
   <topbackbtn></topbackbtn>
-  <div id="top-img" v-bind:style="{backgroundImage: 'url('+url+singermid+url2+')'}"></div>
+  <div id="top-img" :style="{backgroundImage: `url(${titleImg})`}"></div>
   <div class="content">
     <ul>
       <loading v-show="!singerList.length"></loading>
@@ -36,13 +36,13 @@ export default {
       singermid: '',
       singerDetail: '',
       singerList: [],
-      url: 'https://y.gtimg.cn/music/photo_new/T001R300x300M000',
-      url2: '.jpg?max_age=2592000'
+      titleImg: ''
     }
   },
   methods: {
     _getSingerDetail () {
       let singermid = this.$route.params.id
+      this.titleImg = `https://y.gtimg.cn/music/photo_new/T001R300x300M000${singermid}.jpg?max_age=2592000`
       getSingerDetail(singermid).then((res) => {
         console.log(res)
         this.singermid = res.data.singer_mid
@@ -57,13 +57,11 @@ export default {
     },
     getSongMid (songmid, index) { // 路由跳转至播放器页面
       window.sessionStorage.setItem('playList', JSON.stringify(this.singerList)) // 播放列表
-      let mid = songmid
-      let i = index
       this.$router.push({
         path: `/player`,
         query: {
-          songmid: mid,
-          index: i
+          songmid: songmid,
+          index: index
         }
         // path: `/player/${mid}`
       })

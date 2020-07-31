@@ -1,6 +1,6 @@
 <template>
 <div id="content">
-  <div class="content-bg" :style="{backgroundImage: 'url('+ albumImg +')'}"></div>
+  <div class="content-bg" :style="{backgroundImage: `url(${albumImg})`}"></div>
   <span id="back-btn" @click="$router.back(-1)">
     <font-awesome-icon :icon="['fas', 'chevron-left']" />
   </span>
@@ -10,7 +10,7 @@
       <span v-for="(singer, index) in singers" :key="singer.name"><span v-if="!!index">/</span>{{singer.name}}</span>
     </p>
     <div class="circle-img">
-      <div class="inner-circle" :style="{backgroundImage: 'url('+ albumImg +')'}"></div>
+      <div class="inner-circle" :style="{backgroundImage: `url(${albumImg})`}"></div>
     </div>
     <div class="player-scroll" ref="scroll">
       <div class="scroll-inner" ref="point">
@@ -55,14 +55,18 @@ export default {
     }
   },
   methods: {
+    warning () {
+      alert('版权原因无法播放')
+    },
     playerUrl (songmid) {
-      let url = 'https://u.y.qq.com/cgi-bin/musicu.fcg?format=json&data=%7B%22req_0%22%3A%7B%22module%22%3A%22vkey.GetVkeyServer%22%2C%22method%22%3A%22CgiGetVkey%22%2C%22param%22%3A%7B%22guid%22%3A%22358840384%22%2C%22songmid%22%3A%5B%22' + songmid + '%22%5D%2C%22songtype%22%3A%5B0%5D%2C%22uin%22%3A%221443481947%22%2C%22loginflag%22%3A1%2C%22platform%22%3A%2220%22%7D%7D%2C%22comm%22%3A%7B%22uin%22%3A%2218585073516%22%2C%22format%22%3A%22json%22%2C%22ct%22%3A24%2C%22cv%22%3A0%7D%7D'
+      let url = `https://u.y.qq.com/cgi-bin/musicu.fcg?format=json&data=%7B%22req_0%22%3A%7B%22module%22%3A%22vkey.GetVkeyServer%22%2C%22method%22%3A%22CgiGetVkey%22%2C%22param%22%3A%7B%22guid%22%3A%22358840384%22%2C%22songmid%22%3A%5B%22${songmid}%22%5D%2C%22songtype%22%3A%5B0%5D%2C%22uin%22%3A%221443481947%22%2C%22loginflag%22%3A1%2C%22platform%22%3A%2220%22%7D%7D%2C%22comm%22%3A%7B%22uin%22%3A%2218585073516%22%2C%22format%22%3A%22json%22%2C%22ct%22%3A24%2C%22cv%22%3A0%7D%7D`
       jsonp(url).then((res) => { // 播放链接需要使用数据拼接
         console.log(res)
         if (!res.req_0.data.midurlinfo[0].purl) { // 无法获取到值则无法播放
           this.cantPlay = true
+          setTimeout(alert('版权原因无法播放'), 8000)
         }
-        let playUrl = '/music/' + res.req_0.data.midurlinfo[0].purl // sip[0]+purl = http://ws.stream.qqmusic.qq.com + C400 + params'
+        let playUrl = `http://ws.stream.qqmusic.qq.com/${res.req_0.data.midurlinfo[0].purl}` // sip[0]+purl = http://ws.stream.qqmusic.qq.com + C400 + params'
         console.log(playUrl)
         this.playUrl = playUrl // 播放链接
       })
@@ -72,44 +76,29 @@ export default {
     },
     getToken () {
       this.songmid = this.$route.query.songmid // 接收路由传递参数
-      this.playerUrl(this.songmid)
+      this.playerUrl(this.songmid) // 获取播放链接
     },
     getAlbumImg () { // 获取专辑图片
       let playList = JSON.parse(window.sessionStorage.getItem('playList'))
       let index = this.$route.query.index
       this.curSong = index
-      this.playList = playList
-      this.name = playList[index].songname
-      this.singers = playList[index].singer
-      let albummid = playList[index].albummid
-      console.log(albummid)
-      let url = 'https://y.gtimg.cn/music/photo_new/T002R180x180M000' + albummid + '.jpg'
-      console.log(url)
-      this.albumImg = url
+      this.getMusicInfo(playList, index)
     },
     nextSong () { // 下收歌曲
-      let index = this.curSong + 1
-      let playList = this.playList
-      this.name = playList[index].songname
-      this.singers = playList[index].singer
-      this.songmid = playList[index].songmid
-      let albummid = playList[index].albummid
-      let url = 'https://y.gtimg.cn/music/photo_new/T002R180x180M000' + albummid + '.jpg'
-      this.albumImg = url
-      this.curSong = index
+      this.curSong++
+      this.getMusicInfo(this.playList, this.curSong)
       this.playerUrl(this.songmid)
     },
     lastSong () { // 上首歌曲
-      let index = this.curSong - 1
-      let playList = this.playList
+      this.curSong--
+      this.getMusicInfo(this.playList, this.curSong)
+      this.playerUrl(this.songmid)
+    },
+    getMusicInfo (playList, index) {
+      this.playList = playList
       this.name = playList[index].songname
       this.singers = playList[index].singer
-      this.songmid = playList[index].songmid
-      let albummid = playList[index].albummid
-      let url = 'https://y.gtimg.cn/music/photo_new/T002R180x180M000' + albummid + '.jpg'
-      this.albumImg = url
-      this.curSong = index
-      this.playerUrl(this.songmid)
+      this.albumImg = `https://y.gtimg.cn/music/photo_new/T002R180x180M000${playList[index].albummid}.jpg`
     },
     play () { // 播放
       let music = this.$refs.audio
@@ -184,10 +173,10 @@ export default {
 #back-btn {
   z-index: 100;
   position: absolute;
-  left: 10px;
+  top: 20px;
+  left: 12px;
   height: 40px;
-  line-height: 40px;
-  font-size: 20px;
+  font-size: 22px;
   color: #fff;
 }
 .content {
@@ -238,6 +227,7 @@ export default {
     background-color: #fff;
     .scroll-inner {
       position: relative;
+      width: 0;
       height: 4px;
       border-radius: 2px;
       background-color: #33CC99;
@@ -257,13 +247,13 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  line-height: 100px;
+  height: 110px;
+  line-height: 110px;
   span {
     display: inline-block;
-    font-size: 24px;
+    font-size: 30px;
   }
   .left {
-
   }
   .play {
     margin: 0 30px;
@@ -272,7 +262,6 @@ export default {
     margin: 0 30px;
   }
   .right {
-
   }
 }
 </style>
