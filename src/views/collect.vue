@@ -38,7 +38,7 @@ export default {
     },
     deleteCollect (index) { // 删除收藏内容
       let list = JSON.parse(localStorage.getItem('collectList')) || []
-      list.splice(index, index + 1)
+      list.splice(index, 1)
       this.list = list
       window.localStorage.setItem('collectList', JSON.stringify(list))
     },

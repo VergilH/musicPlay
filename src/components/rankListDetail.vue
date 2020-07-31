@@ -16,11 +16,11 @@
           <p v-for="singer in song.singer" :key="singer.name">/{{singer.name}}</p>
           <p>- {{song.albumname}}</p>
         </div>
-        <div id="like" @click="addCollect(song)">
-          <span class="red" v-if="redHeart(song.songmid)">
+        <div id="like">
+          <span class="red" v-if="redHeart(song.songmid)" @click="deleteCollect(song)">
             <font-awesome-icon icon="heart" />
           </span>
-          <span v-else>
+          <span v-else @click="addCollect(song)">
             <font-awesome-icon :icon="['far', 'heart']" />
           </span>
         </div>
@@ -83,13 +83,25 @@ export default {
       window.localStorage.setItem('collectList', JSON.stringify(older))
       this.updataCollect()
     },
+    deleteCollect (song) {
+      let older = JSON.parse(localStorage.getItem('collectList')) || [] // 先读取 无数据时值为null
+      older.forEach((i, item) => { // 对比值并删除
+        if (i.songmid === song.songmid) {
+          older.splice(item, 1)
+          window.localStorage.setItem('collectList', JSON.stringify(older))
+        }
+      })
+      this.updataCollect()
+    },
     updataCollect () { // 更新收藏内容渲染，需要及时更新
       let list = []
       let older = JSON.parse(localStorage.getItem('collectList')) || []
-      console.log(older)
-      console.log(JSON.stringify(this.songList).indexOf(JSON.stringify(older[0].songmid)))
+      for (var i = 0; i < older.length; i++) {
+        if (JSON.stringify(this.songList).indexOf(JSON.stringify(older[i].songmid)) > -1) {
+          list.push(older[i].songmid) // 获取到需要渲染的歌曲
+        }
+      }
       this.songmid = list
-      console.log(list) // 转换成字符串判断是否含有相同数据
     },
     redHeart (target) {
       if (this.songmid.indexOf(target) === -1) {
